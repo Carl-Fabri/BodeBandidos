@@ -5,6 +5,7 @@
 package Views;
 
 import com.formdev.flatlaf.FlatLightLaf;
+import java.awt.BorderLayout;
 import javax.swing.JPanel;
 
 /**
@@ -18,6 +19,19 @@ public class DashboardProducts extends javax.swing.JFrame {
      */
     public DashboardProducts() {
         initComponents();
+        initContet();
+    }
+    
+    
+    private void initContet() {
+        Principal plPrincipal = new Principal();
+        plPrincipal.setSize(700, 423);
+        plPrincipal.setLocation(0,0);
+        
+        panContent.removeAll();
+        panContent.add(plPrincipal, BorderLayout.CENTER);
+        panContent.revalidate();
+        panContent.repaint();   
     }
 
     /**
@@ -150,6 +164,7 @@ public class DashboardProducts extends javax.swing.JFrame {
         );
 
         panContent.setBackground(new java.awt.Color(255, 255, 255));
+        panContent.setRequestFocusEnabled(false);
 
         javax.swing.GroupLayout panContentLayout = new javax.swing.GroupLayout(panContent);
         panContent.setLayout(panContentLayout);
@@ -264,4 +279,5 @@ public class DashboardProducts extends javax.swing.JFrame {
     private javax.swing.JPanel panContent;
     private javax.swing.JPanel panMenu;
     // End of variables declaration//GEN-END:variables
+
 }
