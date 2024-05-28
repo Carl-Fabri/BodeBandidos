@@ -4,19 +4,106 @@
  */
 package Views;
 
+import java.awt.Color;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import model.Clientes;
+
 /**
  *
  * @author LAB-USR-LCENTRO
  */
 public class CustomersView extends javax.swing.JFrame {
 
+        DefaultTableModel model;
+    private ArrayList<Clientes> array; 
+    private TableRowSorter<DefaultTableModel> rowSorter;
     /**
      * Creates new form CustomersView
      */
-    public CustomersView() {
+    public CustomersView(){
         initComponents();
-    }
+        //ArrayList<Clientes> getAllClientes = new ArrayList<>();
+        array = new ArrayList<>();
+        model = new DefaultTableModel();    
+        model.addColumn("ID");
+        model.addColumn("Nombre");
+        model.addColumn("Apellido");
+        model.addColumn("Fecha de nacimiento");
+        model.addColumn("Direccion");
+        model.addColumn("Dni o Ruc");
+        model.addColumn("Telefono");
+        model.addColumn("Correo"); 
+        model.addColumn("Sexo");
+        model.addColumn("Fecha de Actualizacion");
+        model.addColumn("Fecha de creacion");
+        tbl.setModel(model);
+        rowSorter = new TableRowSorter<>(model);
+        tbl.setRowSorter(rowSorter);
+        
 
+        
+            tbl.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                int selectedRow = tbl.getSelectedRow();
+                if (selectedRow >= 0) {
+                    txtId.setText(tbl.getValueAt(selectedRow, 0).toString());
+                    txtNom.setText(tbl.getValueAt(selectedRow, 1).toString());
+                    txtApelli.setText(tbl.getValueAt(selectedRow, 2).toString());
+                    txtFechaNac.setText(tbl.getValueAt(selectedRow, 3).toString());
+                    txtDireccion.setText(tbl.getValueAt(selectedRow, 4).toString());
+                    txtDnioRuc.setText(tbl.getValueAt(selectedRow, 5).toString());
+                    txtTelef.setText(tbl.getValueAt(selectedRow, 6).toString());
+                    txtCorreo.setText(tbl.getValueAt(selectedRow, 7).toString());
+                    txtSexo.setText(tbl.getValueAt(selectedRow, 8).toString());
+                }
+            }
+        });
+            
+                        // Configurar el listener del JTextField para la búsqueda
+    txfSearchValue.getDocument().addDocumentListener(new DocumentListener() {
+        @Override
+        public void insertUpdate(DocumentEvent e) {
+            applyFilter();
+        }
+
+        @Override
+        public void removeUpdate(DocumentEvent e) {
+            applyFilter();
+        }
+
+        @Override
+        public void changedUpdate(DocumentEvent e) {
+            applyFilter();
+        }
+
+        private void applyFilter() {
+            String text = txfSearchValue.getText();
+            if (text.trim().isEmpty()) {
+                rowSorter.setRowFilter(null);
+                btnCleanSearch.setBackground(null);
+                btnCleanSearch.setForeground(null);
+            } else {
+                rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text, 1));
+                btnCleanSearch.setBackground(Color.RED);
+                btnCleanSearch.setForeground(Color.WHITE);
+            }
+        }
+             });
+            
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,21 +114,157 @@ public class CustomersView extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        txtApelli = new javax.swing.JTextField();
+        txtFechaNac = new javax.swing.JTextField();
+        txtCorreo = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        txtDireccion = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        txtTelef = new javax.swing.JTextField();
+        txtDnioRuc = new javax.swing.JTextField();
+        btnCleanSearch = new javax.swing.JButton();
+        Eliminar = new javax.swing.JButton();
+        Editar = new javax.swing.JButton();
+        txtSexo = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        txfSearchValue = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        txtId = new javax.swing.JTextField();
+        txtNom = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbl = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        txtApelli.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtApelliActionPerformed(evt);
+            }
+        });
+
+        txtFechaNac.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFechaNacActionPerformed(evt);
+            }
+        });
+
+        txtCorreo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCorreoActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel5.setText("Lista de clientes");
+
+        txtDireccion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDireccionActionPerformed(evt);
+            }
+        });
+
+        jButton4.setBackground(java.awt.SystemColor.control);
+        jButton4.setText("Crear un Cliente");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        txtTelef.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTelefActionPerformed(evt);
+            }
+        });
+
+        txtDnioRuc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDnioRucActionPerformed(evt);
+            }
+        });
+
+        btnCleanSearch.setText("Remover filtros");
+        btnCleanSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCleanSearchActionPerformed(evt);
+            }
+        });
+
+        Eliminar.setText("Eliminar un cliente");
+        Eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EliminarActionPerformed(evt);
+            }
+        });
+
+        Editar.setText("Editar un cliente");
+        Editar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EditarActionPerformed(evt);
+            }
+        });
+
+        txtSexo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSexoActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("ID");
+
+        txfSearchValue.setToolTipText("");
+        txfSearchValue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfSearchValueActionPerformed(evt);
+            }
+        });
+        txfSearchValue.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                txfSearchValuePropertyChange(evt);
+            }
+        });
+
+        jLabel2.setText("Nombre");
+
+        jLabel3.setText("Apellido");
+
+        jLabel4.setText("Fecha de nacimiento");
+
+        jLabel6.setText("Direccion");
+
+        jLabel7.setText("Dni o Ruc");
+
+        jLabel8.setText("Telefono");
+
+        jLabel9.setText("Correo");
+
+        jLabel10.setText("Sexo");
+
+        jLabel11.setText("Buscar:");
+
+        txtId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIdActionPerformed(evt);
+            }
+        });
+
+        txtNom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNomActionPerformed(evt);
+            }
+        });
+
+        tbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null, null, null},
@@ -52,70 +275,123 @@ public class CustomersView extends javax.swing.JFrame {
                 "Id", "Nombres", "Apellidos", "Fecha nacimiento", "Dirección", "DNI - RUC", "Telefono", "Correo electronica", "Sexo", "Fecha de actualizacion", "Fecha de creacion"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel5.setText("Clientes");
-
-        jTextField5.setText("Nombre del cliente");
-
-        jButton4.setBackground(java.awt.SystemColor.control);
-        jButton4.setText("Buscar");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-
-        jButton1.setText("Filtros");
-
-        jButton2.setText("Crear un cliente");
-
-        jButton3.setText("Eliminar un cliente");
-
-        jButton5.setText("Editar un cliente");
+        tbl.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane1.setViewportView(tbl);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 702, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel2))
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 646, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtId)
+                                .addComponent(txtNom, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtApelli, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(23, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtDireccion)
+                            .addComponent(txtDnioRuc)
+                            .addComponent(txtTelef)
+                            .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(44, 44, 44)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtSexo))
+                            .addComponent(Editar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Eliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(22, 22, 22))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txfSearchValue, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnCleanSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
+                .addContainerGap(11, Short.MAX_VALUE)
                 .addComponent(jLabel5)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4)
-                    .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel3)
+                            .addGap(18, 18, 18)
+                            .addComponent(jLabel4))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel10)
+                                .addComponent(txtSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jButton4)
+                            .addGap(9, 9, 9)
+                            .addComponent(Editar)
+                            .addGap(7, 7, 7)
+                            .addComponent(Eliminar))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel6)
+                                .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel7)
+                                .addComponent(txtDnioRuc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(9, 9, 9)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txtTelef, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel8))
+                            .addGap(7, 7, 7)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel9)
+                                .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtNom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtApelli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton5))
-                .addContainerGap(18, Short.MAX_VALUE))
+                    .addComponent(btnCleanSearch)
+                    .addComponent(txfSearchValue, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11))
+                .addGap(0, 16, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -126,15 +402,317 @@ public class CustomersView extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void txtApelliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApelliActionPerformed
+        String id = txtId.getText();
+        String nombre = txtNom.getText();
+        String apellido = txtApelli.getText();
+        String fechaNacimiento = txtFechaNac.getText();
+        String direccion = txtDnioRuc.getText();
+        String dniORuc = txtCorreo.getText();
+        String telefono = txtDireccion.getText();
+        String correo = txtTelef.getText();
+        String sexo = txtSexo.getText();
+
+        if (id.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || fechaNacimiento.isEmpty() || direccion.isEmpty() || dniORuc.isEmpty() || telefono.isEmpty() || correo.isEmpty() || sexo.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Error: Uno o más campos están vacíos.", "Error de validación", JOptionPane.ERROR_MESSAGE);
+        } else {
+            // Aquí iría el código para procesar los datos ingresados
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_txtApelliActionPerformed
+
+    private void txtFechaNacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaNacActionPerformed
+        String id = txtId.getText();
+        String nombre = txtNom.getText();
+        String apellido = txtApelli.getText();
+        String fechaNacimiento = txtFechaNac.getText();
+        String direccion = txtDnioRuc.getText();
+        String dniORuc = txtCorreo.getText();
+        String telefono = txtDireccion.getText();
+        String correo = txtTelef.getText();
+        String sexo = txtSexo.getText();
+
+        if (id.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || fechaNacimiento.isEmpty() || direccion.isEmpty() || dniORuc.isEmpty() || telefono.isEmpty() || correo.isEmpty() || sexo.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Error: Uno o más campos están vacíos.", "Error de validación", JOptionPane.ERROR_MESSAGE);
+        } else {
+
+        }
+    }//GEN-LAST:event_txtFechaNacActionPerformed
+
+    private void txtCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCorreoActionPerformed
+        String id = txtId.getText();
+        String nombre = txtNom.getText();
+        String apellido = txtApelli.getText();
+        String fechaNacimiento = txtFechaNac.getText();
+        String direccion = txtDnioRuc.getText();
+        String dniORuc = txtCorreo.getText();
+        String telefono = txtDireccion.getText();
+        String correo = txtTelef.getText();
+        String sexo = txtSexo.getText();
+
+        if (id.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || fechaNacimiento.isEmpty() || direccion.isEmpty() || dniORuc.isEmpty() || telefono.isEmpty() || correo.isEmpty() || sexo.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Error: Uno o más campos están vacíos.", "Error de validación", JOptionPane.ERROR_MESSAGE);
+        } else {
+            // Aquí iría el código para procesar los datos ingresados
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCorreoActionPerformed
+
+    private void txtDireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDireccionActionPerformed
+        String id = txtId.getText();
+        String nombre = txtNom.getText();
+        String apellido = txtApelli.getText();
+        String fechaNacimiento = txtFechaNac.getText();
+        String direccion = txtDnioRuc.getText();
+        String dniORuc = txtCorreo.getText();
+        String telefono = txtDireccion.getText();
+        String correo = txtTelef.getText();
+        String sexo = txtSexo.getText();
+
+        if (id.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || fechaNacimiento.isEmpty() || direccion.isEmpty() || dniORuc.isEmpty() || telefono.isEmpty() || correo.isEmpty() || sexo.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Error: Uno o más campos están vacíos.", "Error de validación", JOptionPane.ERROR_MESSAGE);
+        } else {
+            // Aquí iría el código para procesar los datos ingresados
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDireccionActionPerformed
+
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+
+        String id = txtId.getText();
+        String nombre = txtNom.getText();
+        String apellido = txtApelli.getText();
+        String fechaNacimiento = txtFechaNac.getText();
+        String direccion = txtDnioRuc.getText();
+        String dniORuc = txtDnioRuc.getText();
+        String telefono = txtDireccion.getText();
+        String correo = txtTelef.getText();
+        String sexo = txtSexo.getText();
+        //si te fijas en la parte de abajo dice error y terminos raros no se exactamente como hacer el arreglo, los datos son en int ya que son numero ID fechas dni telefono
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+        //Integer.parseInt(dniORuc)
+        try
+        {
+            int idInt = 20;
+            int telefonoInt = 20;
+            int dniORucInt = 20;
+            LocalDate fechaNacimientoLocalDate = LocalDate.parse(fechaNacimiento, formatter);
+
+            LocalDate fechaActualizacionLocalDate = LocalDate.now();
+            LocalDate fechaCreacionLocalDate = LocalDate.now();
+
+            Clientes cliente = new Clientes(nombre, apellido, direccion, correo, sexo, idInt, fechaNacimientoLocalDate, dniORucInt, telefonoInt, fechaActualizacionLocalDate, fechaCreacionLocalDate);
+
+            array.add(cliente);
+
+            DefaultTableModel model = (DefaultTableModel) tbl.getModel();
+            model.addRow(new Object[]{id, nombre, apellido, fechaNacimiento, direccion, dniORucInt, telefono, correo, sexo, fechaActualizacionLocalDate, fechaCreacionLocalDate});
+            limpiarCampos();
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Error: Uno o más campos no son números enteros válidos.", "Error de conversión", JOptionPane.ERROR_MESSAGE);
+        } catch (DateTimeParseException e) {
+            JOptionPane.showMessageDialog(this, "Error: El formato de fecha no es válido.", "Error de formato de fecha", JOptionPane.ERROR_MESSAGE);
+        }
+        }
+        private void limpiarCampos() {
+            txtId.setText("");
+            txtNom.setText("");
+            txtApelli.setText("");
+            txtFechaNac.setText("");
+            txtDnioRuc.setText("");
+            txtCorreo.setText("");
+            txtDireccion.setText("");
+            txtTelef.setText("");
+            txtSexo.setText("");
+            txtId.requestFocus();
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void txtTelefActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefActionPerformed
+        String id = txtId.getText();
+        String nombre = txtNom.getText();
+        String apellido = txtApelli.getText();
+        String fechaNacimiento = txtFechaNac.getText();
+        String direccion = txtDnioRuc.getText();
+        String dniORuc = txtCorreo.getText();
+        String telefono = txtDireccion.getText();
+        String correo = txtTelef.getText();
+        String sexo = txtSexo.getText();
+
+        if (id.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || fechaNacimiento.isEmpty() || direccion.isEmpty() || dniORuc.isEmpty() || telefono.isEmpty() || correo.isEmpty() || sexo.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Error: Uno o más campos están vacíos.", "Error de validación", JOptionPane.ERROR_MESSAGE);
+        } else {
+            // Aquí iría el código para procesar los datos ingresados
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTelefActionPerformed
+
+    private void txtDnioRucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDnioRucActionPerformed
+        String id = txtId.getText();
+        String nombre = txtNom.getText();
+        String apellido = txtApelli.getText();
+        String fechaNacimiento = txtFechaNac.getText();
+        String direccion = txtDnioRuc.getText();
+        String dniORuc = txtCorreo.getText();
+        String telefono = txtDireccion.getText();
+        String correo = txtTelef.getText();
+        String sexo = txtSexo.getText();
+
+        if (id.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || fechaNacimiento.isEmpty() || direccion.isEmpty() || dniORuc.isEmpty() || telefono.isEmpty() || correo.isEmpty() || sexo.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Error: Uno o más campos están vacíos.", "Error de validación", JOptionPane.ERROR_MESSAGE);
+        } else {
+            // Aquí iría el código para procesar los datos ingresados
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDnioRucActionPerformed
+
+    private void btnCleanSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCleanSearchActionPerformed
+
+        txfSearchValue.setText("");
+        btnCleanSearch.setBackground(null);
+        btnCleanSearch.setForeground(null);
+        rowSorter.setRowFilter(null);
+    }//GEN-LAST:event_btnCleanSearchActionPerformed
+
+    private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
+        int fila = tbl.getSelectedRow();
+        if(fila >= 0) {
+            int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar la fila seleccionada?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+            if (opcion == JOptionPane.YES_OPTION) {
+                array.remove(fila);
+                model.removeRow(fila);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Por favor seleccione una fila para eliminar", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_EliminarActionPerformed
+
+    private void EditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditarActionPerformed
+        int selectedRow = tbl.getSelectedRow();
+        if (selectedRow >= 0) {
+            String id = txtId.getText();
+            String nombre = txtNom.getText();
+            String apellido = txtApelli.getText();
+            String fechaNacimiento = txtFechaNac.getText();
+            String direccion = txtDireccion.getText();
+            String dniORuc = txtDnioRuc.getText();
+            String telefono = txtTelef.getText();
+            String correo = txtCorreo.getText();
+            String sexo = txtSexo.getText();
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+            try {
+                int idInt = Integer.parseInt(id);
+                int telefonoInt = Integer.parseInt(telefono);
+                int dniORucInt = Integer.parseInt(dniORuc);
+
+                LocalDate fechaNacimientoLocalDate = LocalDate.parse(fechaNacimiento, formatter);
+                LocalDate fechaActualizacionLocalDate = LocalDate.now();
+
+                // Actualizar el objeto en el ArrayList
+                Clientes cliente = array.get(selectedRow);
+                cliente.setId(idInt);
+                cliente.setNombre(nombre);
+                cliente.setApellido(apellido);
+                cliente.setFechadenacimiento(fechaNacimientoLocalDate);
+                cliente.setDireccion(direccion);
+                cliente.setDnioruc(dniORucInt);
+                cliente.setTelefono(telefonoInt);
+                cliente.setCorreo(correo);
+                cliente.setSexo(sexo);
+                cliente.setFechaactu(fechaActualizacionLocalDate);
+
+                // Actualizar la fila en el JTable
+                DefaultTableModel model = (DefaultTableModel) tbl.getModel();
+                model.setValueAt(idInt, selectedRow, 0);
+                model.setValueAt(nombre, selectedRow, 1);
+                model.setValueAt(apellido, selectedRow, 2);
+                model.setValueAt(fechaNacimientoLocalDate, selectedRow, 3);
+                model.setValueAt(direccion, selectedRow, 4);
+                model.setValueAt(dniORucInt, selectedRow, 5);
+                model.setValueAt(telefonoInt, selectedRow, 6);
+                model.setValueAt(correo, selectedRow, 7);
+                model.setValueAt(sexo, selectedRow, 8);
+                model.setValueAt(fechaActualizacionLocalDate, selectedRow, 9);
+
+                limpiarCampos();
+
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Error: Uno o más campos no son números enteros válidos.", "Error de conversión", JOptionPane.ERROR_MESSAGE);
+            } catch (DateTimeParseException e) {
+                JOptionPane.showMessageDialog(this, "Error: El formato de fecha no es válido.", "Error de formato de fecha", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No se ha seleccionado ninguna fila para editar.", "Error de selección", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_EditarActionPerformed
+
+    private void txtSexoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSexoActionPerformed
+        String id = txtId.getText();
+        String nombre = txtNom.getText();
+        String apellido = txtApelli.getText();
+        String fechaNacimiento = txtFechaNac.getText();
+        String direccion = txtDnioRuc.getText();
+        String dniORuc = txtCorreo.getText();
+        String telefono = txtDireccion.getText();
+        String correo = txtTelef.getText();
+        String sexo = txtSexo.getText();
+
+        if (id.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || fechaNacimiento.isEmpty() || direccion.isEmpty() || dniORuc.isEmpty() || telefono.isEmpty() || correo.isEmpty() || sexo.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Error: Uno o más campos están vacíos.", "Error de validación", JOptionPane.ERROR_MESSAGE);
+        } else {
+            // Aquí iría el código para procesar los datos ingresados
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSexoActionPerformed
+
+    private void txfSearchValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfSearchValueActionPerformed
+
+    }//GEN-LAST:event_txfSearchValueActionPerformed
+
+    private void txfSearchValuePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_txfSearchValuePropertyChange
+
+    }//GEN-LAST:event_txfSearchValuePropertyChange
+
+    private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
+        String id = txtId.getText();
+        String nombre = txtNom.getText();
+        String apellido = txtApelli.getText();
+        String fechaNacimiento = txtFechaNac.getText();
+        String direccion = txtDnioRuc.getText();
+        String dniORuc = txtCorreo.getText();
+        String telefono = txtDireccion.getText();
+        String correo = txtTelef.getText();
+        String sexo = txtSexo.getText();
+
+        if (id.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || fechaNacimiento.isEmpty() || direccion.isEmpty() || dniORuc.isEmpty() || telefono.isEmpty() || correo.isEmpty() || sexo.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Error: Uno o más campos están vacíos.", "Error de validación", JOptionPane.ERROR_MESSAGE);
+        } else {
+            // Aquí iría el código para procesar los datos ingresados
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIdActionPerformed
+
+    private void txtNomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomActionPerformed
+        String id = txtId.getText();
+        String nombre = txtNom.getText();
+        String apellido = txtApelli.getText();
+        String fechaNacimiento = txtFechaNac.getText();
+        String direccion = txtDnioRuc.getText();
+        String dniORuc = txtCorreo.getText();
+        String telefono = txtDireccion.getText();
+        String correo = txtTelef.getText();
+        String sexo = txtSexo.getText();
+
+        if (id.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || fechaNacimiento.isEmpty() || direccion.isEmpty() || dniORuc.isEmpty() || telefono.isEmpty() || correo.isEmpty() || sexo.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Error: Uno o más campos están vacíos.", "Error de validación", JOptionPane.ERROR_MESSAGE);
+        } else {
+            // Aquí iría el código para procesar los datos ingresados
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNomActionPerformed
 
     /**
      * @param args the command line arguments
@@ -172,15 +750,33 @@ public class CustomersView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton Editar;
+    private javax.swing.JButton Eliminar;
+    private javax.swing.JButton btnCleanSearch;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTable tbl;
+    private javax.swing.JTextField txfSearchValue;
+    private javax.swing.JTextField txtApelli;
+    private javax.swing.JTextField txtCorreo;
+    private javax.swing.JTextField txtDireccion;
+    private javax.swing.JTextField txtDnioRuc;
+    private javax.swing.JTextField txtFechaNac;
+    private javax.swing.JTextField txtId;
+    private javax.swing.JTextField txtNom;
+    private javax.swing.JTextField txtSexo;
+    private javax.swing.JTextField txtTelef;
     // End of variables declaration//GEN-END:variables
 }
