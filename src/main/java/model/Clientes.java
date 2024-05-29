@@ -20,12 +20,12 @@ public Clientes (){
 }
 
     public Clientes(String nombre, String apellido, String direccion, String correo, String sexo, int id, LocalDate fechadenacimiento, int dnioruc, int telefono, LocalDate fechaactu, LocalDate fechacrea) {
+        this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.direccion = direccion;
         this.correo = correo;
         this.sexo = sexo;
-        this.id = id;
         this.fechadenacimiento = fechadenacimiento;
         this.dnioruc = dnioruc;
         this.telefono = telefono;

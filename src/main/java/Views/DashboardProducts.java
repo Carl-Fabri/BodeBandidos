@@ -25,13 +25,7 @@ public class DashboardProducts extends javax.swing.JFrame {
     
     private void initContet() {
         Principal plPrincipal = new Principal();
-        plPrincipal.setSize(700, 423);
-        plPrincipal.setLocation(0,0);
-        
-        panContent.removeAll();
-        panContent.add(plPrincipal, BorderLayout.CENTER);
-        panContent.revalidate();
-        panContent.repaint();   
+        ShowJPanel(plPrincipal);
     }
 
     /**
@@ -131,19 +125,15 @@ public class DashboardProducts extends javax.swing.JFrame {
         panMenuLayout.setHorizontalGroup(
             panMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panMenuLayout.createSequentialGroup()
-                .addGroup(panMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panMenuLayout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnProductsPan, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 6, Short.MAX_VALUE))
-            .addComponent(btnCategoriesPan2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnCategoriesPan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnCategoriesPan1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(panMenuLayout.createSequentialGroup()
                 .addGap(54, 54, 54)
-                .addComponent(lblTitle)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(lblTitle))
+            .addGroup(panMenuLayout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(btnProductsPan, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnCategoriesPan, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnCategoriesPan2, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnCategoriesPan1, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         panMenuLayout.setVerticalGroup(
             panMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,15 +142,14 @@ public class DashboardProducts extends javax.swing.JFrame {
                 .addComponent(lblTitle)
                 .addGap(6, 6, 6)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(19, 19, 19)
+                .addGap(21, 21, 21)
                 .addComponent(btnProductsPan, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnCategoriesPan2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(3, 3, 3)
+                .addGap(7, 7, 7)
                 .addComponent(btnCategoriesPan, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnCategoriesPan1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(7, 7, 7)
+                .addComponent(btnCategoriesPan2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7)
+                .addComponent(btnCategoriesPan1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         panContent.setBackground(new java.awt.Color(255, 255, 255));
@@ -174,7 +163,7 @@ public class DashboardProducts extends javax.swing.JFrame {
         );
         panContentLayout.setVerticalGroup(
             panContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 423, Short.MAX_VALUE)
+            .addGap(0, 400, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout panBackgroundLayout = new javax.swing.GroupLayout(panBackground);
@@ -189,7 +178,9 @@ public class DashboardProducts extends javax.swing.JFrame {
         panBackgroundLayout.setVerticalGroup(
             panBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(panContent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(panBackgroundLayout.createSequentialGroup()
+                .addComponent(panContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -207,11 +198,13 @@ public class DashboardProducts extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCategoriesPanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriesPanActionPerformed
-        // TODO add your handling code here:
+        CustomersPanel pl = new CustomersPanel();
+        ShowJPanel(pl);
     }//GEN-LAST:event_btnCategoriesPanActionPerformed
 
     private void btnCategoriesPan1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriesPan1ActionPerformed
-        // TODO add your handling code here:
+        OrderPanel pl = new OrderPanel();
+        ShowJPanel(pl);
     }//GEN-LAST:event_btnCategoriesPan1ActionPerformed
 
     private void btnCategoriesPan2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriesPan2ActionPerformed
@@ -219,17 +212,18 @@ public class DashboardProducts extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCategoriesPan2ActionPerformed
 
     private void btnProductsPanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductsPanActionPerformed
-        //ShowJPanel(new ProductView());
+        ProductPanel pl = new ProductPanel();
+        ShowJPanel(pl);
     }//GEN-LAST:event_btnProductsPanActionPerformed
 
-    public static void ShowJPanel(JPanel p) {
-        p.setSize(750, 430);
+    public void ShowJPanel(JPanel p){
+        p.setSize(700, 400);
         p.setLocation(0,0);
         
-        //panContent.removeAll();
-        //panContent.add(p, BorderLayout.CENTER);
-        //panContent.revalidate();
-        //panContent.repaint();
+        panContent.removeAll();
+        panContent.add(p, BorderLayout.CENTER);
+        panContent.revalidate();
+        panContent.repaint();   
     }
     
     /**
