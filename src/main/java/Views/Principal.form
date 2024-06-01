@@ -18,8 +18,11 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
-              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="639" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblInformation" min="-2" pref="643" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="86" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -28,7 +31,9 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="326" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+              <Component id="lblInformation" min="-2" pref="125" max="-2" attributes="0"/>
+              <EmptySpace pref="159" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -41,6 +46,8 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Principal"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblInformation">
     </Component>
   </SubComponents>
 </Form>

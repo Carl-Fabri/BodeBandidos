@@ -78,10 +78,10 @@
                       <Component id="jSeparator1" min="-2" pref="225" max="-2" attributes="0"/>
                   </Group>
                   <Component id="btnProductsPan" min="-2" pref="270" max="-2" attributes="0"/>
-                  <Component id="btnCategoriesPan" min="-2" pref="270" max="-2" attributes="0"/>
+                  <Component id="btnCustomersPan" min="-2" pref="270" max="-2" attributes="0"/>
                   <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                      <Component id="btnOrders" min="-2" pref="269" max="-2" attributes="0"/>
-                      <Component id="btnCategoriesPan2" min="-2" pref="270" max="-2" attributes="0"/>
+                      <Component id="btnOrdersPan" min="-2" pref="269" max="-2" attributes="0"/>
+                      <Component id="btnCategoriesPan" min="-2" pref="270" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -95,11 +95,11 @@
                       <EmptySpace min="21" pref="21" max="-2" attributes="0"/>
                       <Component id="btnProductsPan" min="-2" pref="43" max="-2" attributes="0"/>
                       <EmptySpace min="7" pref="7" max="-2" attributes="0"/>
-                      <Component id="btnCategoriesPan" min="-2" pref="43" max="-2" attributes="0"/>
+                      <Component id="btnCustomersPan" min="-2" pref="43" max="-2" attributes="0"/>
                       <EmptySpace min="7" pref="7" max="-2" attributes="0"/>
-                      <Component id="btnCategoriesPan2" min="-2" pref="43" max="-2" attributes="0"/>
+                      <Component id="btnCategoriesPan" min="-2" pref="43" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnOrders" min="-2" pref="43" max="-2" attributes="0"/>
+                      <Component id="btnOrdersPan" min="-2" pref="43" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -117,7 +117,7 @@
                 <Property name="text" type="java.lang.String" value="BodeBandidos"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="btnCategoriesPan">
+            <Component class="javax.swing.JButton" name="btnCustomersPan">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="66" green="66" red="ff" type="rgb"/>
@@ -145,7 +145,7 @@
                 <Property name="iconTextGap" type="int" value="10"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCategoriesPanActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCustomersPanActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JSeparator" name="jSeparator1">
@@ -181,7 +181,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnProductsPanActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btnOrders">
+            <Component class="javax.swing.JButton" name="btnOrdersPan">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="66" green="66" red="ff" type="rgb"/>
@@ -209,10 +209,10 @@
                 <Property name="iconTextGap" type="int" value="10"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnOrdersActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnOrdersPanActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btnCategoriesPan2">
+            <Component class="javax.swing.JButton" name="btnCategoriesPan">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="66" green="66" red="ff" type="rgb"/>
@@ -240,7 +240,7 @@
                 <Property name="iconTextGap" type="int" value="10"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCategoriesPan2ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCategoriesPanActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>

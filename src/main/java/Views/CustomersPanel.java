@@ -556,18 +556,11 @@ public class CustomersPanel extends javax.swing.JPanel {
                 cliente.setSexo(sexo);
                 cliente.setFechaactu(fechaActualizacionLocalDate);
                 
-                
-                
                 archiv.openFile("customers.dat");
-                archiv.updateCustomer(idInt,cliente);
+                archiv.actualizarClientePorId(idInt,cliente);
                 archiv.closeFile();  
 
-
-
- 
-
                 cargarDatosEnTabla();
-
                 limpiarCampos();
 
             } catch (NumberFormatException e) {
@@ -589,9 +582,13 @@ public class CustomersPanel extends javax.swing.JPanel {
         if(fila >= 0) {
             int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar la fila seleccionada?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
             try{
+                                // Obtener el ID desde la tabla, asumiendo que el ID está en la primera columna
+                int id = Integer.parseInt(tbl.getValueAt(fila, 0).toString());
+                
+                // Eliminar el cliente por ID
                 archiv.openFile("customers.dat");
-                archiv.deleteCustomer(fila);
-                archiv.closeFile();  
+                archiv.eliminarClientePorId(id);
+                archiv.closeFile();    
             }
             catch(IOException e)
             {

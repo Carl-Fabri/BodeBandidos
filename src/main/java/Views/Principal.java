@@ -15,6 +15,9 @@ public class Principal extends javax.swing.JPanel {
      */
     public Principal() {
         initComponents();
+        
+        String texto = "¡Bienvenidos a nuestra tienda! Nos complace darles la más cordial bienvenida a este espacio lleno de estilo, calidad y variedad. En cada rincón encontrarán productos seleccionados con esmero para satisfacer sus necesidades y deleitar sus sentidos.";
+        lblInformation.setText("<html><div style='width:450px;'>" + texto + "</div></html>");
     }
 
     /**
@@ -27,6 +30,7 @@ public class Principal extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        lblInformation = new javax.swing.JLabel();
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setText("Principal");
@@ -37,20 +41,25 @@ public class Principal extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(46, 46, 46)
-                .addComponent(jLabel1)
-                .addContainerGap(639, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(lblInformation, javax.swing.GroupLayout.PREFERRED_SIZE, 643, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(86, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(53, 53, 53)
                 .addComponent(jLabel1)
-                .addContainerGap(326, Short.MAX_VALUE))
+                .addGap(42, 42, 42)
+                .addComponent(lblInformation, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(159, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel lblInformation;
     // End of variables declaration//GEN-END:variables
 }

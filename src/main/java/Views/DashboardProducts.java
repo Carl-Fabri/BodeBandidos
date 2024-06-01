@@ -40,11 +40,11 @@ public class DashboardProducts extends javax.swing.JFrame {
         panBackground = new javax.swing.JPanel();
         panMenu = new javax.swing.JPanel();
         lblTitle = new javax.swing.JLabel();
-        btnCategoriesPan = new javax.swing.JButton();
+        btnCustomersPan = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         btnProductsPan = new javax.swing.JButton();
-        btnOrders = new javax.swing.JButton();
-        btnCategoriesPan2 = new javax.swing.JButton();
+        btnOrdersPan = new javax.swing.JButton();
+        btnCategoriesPan = new javax.swing.JButton();
         panContent = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -56,19 +56,19 @@ public class DashboardProducts extends javax.swing.JFrame {
         lblTitle.setForeground(new java.awt.Color(255, 255, 255));
         lblTitle.setText("BodeBandidos");
 
-        btnCategoriesPan.setBackground(new java.awt.Color(255, 102, 102));
-        btnCategoriesPan.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnCategoriesPan.setForeground(new java.awt.Color(255, 255, 255));
-        btnCategoriesPan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/user-ico.png"))); // NOI18N
-        btnCategoriesPan.setText("Customers");
-        btnCategoriesPan.setBorder(javax.swing.BorderFactory.createMatteBorder(20, 10, 20, 20, new java.awt.Color(0, 0, 0)));
-        btnCategoriesPan.setBorderPainted(false);
-        btnCategoriesPan.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnCategoriesPan.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btnCategoriesPan.setIconTextGap(10);
-        btnCategoriesPan.addActionListener(new java.awt.event.ActionListener() {
+        btnCustomersPan.setBackground(new java.awt.Color(255, 102, 102));
+        btnCustomersPan.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnCustomersPan.setForeground(new java.awt.Color(255, 255, 255));
+        btnCustomersPan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/user-ico.png"))); // NOI18N
+        btnCustomersPan.setText("Customers");
+        btnCustomersPan.setBorder(javax.swing.BorderFactory.createMatteBorder(20, 10, 20, 20, new java.awt.Color(0, 0, 0)));
+        btnCustomersPan.setBorderPainted(false);
+        btnCustomersPan.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCustomersPan.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnCustomersPan.setIconTextGap(10);
+        btnCustomersPan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCategoriesPanActionPerformed(evt);
+                btnCustomersPanActionPerformed(evt);
             }
         });
 
@@ -88,35 +88,35 @@ public class DashboardProducts extends javax.swing.JFrame {
             }
         });
 
-        btnOrders.setBackground(new java.awt.Color(255, 102, 102));
-        btnOrders.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnOrders.setForeground(new java.awt.Color(255, 255, 255));
-        btnOrders.setIcon(new javax.swing.ImageIcon(getClass().getResource("/order-ico.png"))); // NOI18N
-        btnOrders.setText("Orders");
-        btnOrders.setBorder(javax.swing.BorderFactory.createMatteBorder(20, 10, 20, 20, new java.awt.Color(0, 0, 0)));
-        btnOrders.setBorderPainted(false);
-        btnOrders.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnOrders.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btnOrders.setIconTextGap(10);
-        btnOrders.addActionListener(new java.awt.event.ActionListener() {
+        btnOrdersPan.setBackground(new java.awt.Color(255, 102, 102));
+        btnOrdersPan.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnOrdersPan.setForeground(new java.awt.Color(255, 255, 255));
+        btnOrdersPan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/order-ico.png"))); // NOI18N
+        btnOrdersPan.setText("Orders");
+        btnOrdersPan.setBorder(javax.swing.BorderFactory.createMatteBorder(20, 10, 20, 20, new java.awt.Color(0, 0, 0)));
+        btnOrdersPan.setBorderPainted(false);
+        btnOrdersPan.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnOrdersPan.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnOrdersPan.setIconTextGap(10);
+        btnOrdersPan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnOrdersActionPerformed(evt);
+                btnOrdersPanActionPerformed(evt);
             }
         });
 
-        btnCategoriesPan2.setBackground(new java.awt.Color(255, 102, 102));
-        btnCategoriesPan2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnCategoriesPan2.setForeground(new java.awt.Color(255, 255, 255));
-        btnCategoriesPan2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/categoryico.png"))); // NOI18N
-        btnCategoriesPan2.setText("Categories");
-        btnCategoriesPan2.setBorder(javax.swing.BorderFactory.createMatteBorder(20, 10, 20, 20, new java.awt.Color(0, 0, 0)));
-        btnCategoriesPan2.setBorderPainted(false);
-        btnCategoriesPan2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnCategoriesPan2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btnCategoriesPan2.setIconTextGap(10);
-        btnCategoriesPan2.addActionListener(new java.awt.event.ActionListener() {
+        btnCategoriesPan.setBackground(new java.awt.Color(255, 102, 102));
+        btnCategoriesPan.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnCategoriesPan.setForeground(new java.awt.Color(255, 255, 255));
+        btnCategoriesPan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/categoryico.png"))); // NOI18N
+        btnCategoriesPan.setText("Categories");
+        btnCategoriesPan.setBorder(javax.swing.BorderFactory.createMatteBorder(20, 10, 20, 20, new java.awt.Color(0, 0, 0)));
+        btnCategoriesPan.setBorderPainted(false);
+        btnCategoriesPan.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCategoriesPan.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnCategoriesPan.setIconTextGap(10);
+        btnCategoriesPan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCategoriesPan2ActionPerformed(evt);
+                btnCategoriesPanActionPerformed(evt);
             }
         });
 
@@ -131,10 +131,10 @@ public class DashboardProducts extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(btnProductsPan, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(btnCategoriesPan, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnCustomersPan, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(panMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                .addComponent(btnOrders, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(btnCategoriesPan2, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btnOrdersPan, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnCategoriesPan, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         panMenuLayout.setVerticalGroup(
             panMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,11 +146,11 @@ public class DashboardProducts extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addComponent(btnProductsPan, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(7, 7, 7)
-                .addComponent(btnCategoriesPan, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnCustomersPan, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(7, 7, 7)
-                .addComponent(btnCategoriesPan2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnCategoriesPan, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnOrders, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnOrdersPan, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -199,25 +199,25 @@ public class DashboardProducts extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCategoriesPanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriesPanActionPerformed
+    private void btnCustomersPanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCustomersPanActionPerformed
         CustomersPanel pl = new CustomersPanel();
         ShowJPanel(pl);
-    }//GEN-LAST:event_btnCategoriesPanActionPerformed
+    }//GEN-LAST:event_btnCustomersPanActionPerformed
 
-    private void btnOrdersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdersActionPerformed
+    private void btnOrdersPanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdersPanActionPerformed
         OrderPanel pl = new OrderPanel();
         ShowJPanel(pl);
-    }//GEN-LAST:event_btnOrdersActionPerformed
-
-    private void btnCategoriesPan2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriesPan2ActionPerformed
-        CustomersPanel pl = new CustomersPanel();
-        ShowJPanel(pl);
-    }//GEN-LAST:event_btnCategoriesPan2ActionPerformed
+    }//GEN-LAST:event_btnOrdersPanActionPerformed
 
     private void btnProductsPanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductsPanActionPerformed
         ProductPanel pl = new ProductPanel();
         ShowJPanel(pl);
     }//GEN-LAST:event_btnProductsPanActionPerformed
+
+    private void btnCategoriesPanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriesPanActionPerformed
+        CategoriesPanel pl = new CategoriesPanel();
+        ShowJPanel(pl);
+    }//GEN-LAST:event_btnCategoriesPanActionPerformed
 
     public void ShowJPanel(JPanel p){
         p.setSize(700, 400);
@@ -267,8 +267,8 @@ public class DashboardProducts extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCategoriesPan;
-    private javax.swing.JButton btnCategoriesPan2;
-    private javax.swing.JButton btnOrders;
+    private javax.swing.JButton btnCustomersPan;
+    private javax.swing.JButton btnOrdersPan;
     private javax.swing.JButton btnProductsPan;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblTitle;

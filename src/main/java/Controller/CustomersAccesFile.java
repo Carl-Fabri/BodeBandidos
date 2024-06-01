@@ -58,6 +58,36 @@ public class CustomersAccesFile {
         countRegisters++;
     }
     
+        public int buscarIndicePorId(int id) throws IOException {
+        for (int i = 0; i < getNumRegistros(); i++) {
+        flujo.seek(i*tamRegistro);
+        int currentId = flujo.readInt();
+        if (currentId == id) {
+            return i;
+        }
+    }
+    return -1; // Indica que no se encontró el ID
+    }
+    
+    public void actualizarClientePorId(int id, Clientes cliente) throws IOException {
+        int index = buscarIndicePorId(id);
+        if (index != -1) {
+            updateCustomer(index, cliente);
+        } else {
+            throw new IOException("Cliente con ID " + id + " no encontrado.");
+        }
+    }
+    
+    public void eliminarClientePorId(int id) throws IOException {
+        int index = buscarIndicePorId(id);
+        if (index != -1) {
+            deleteCustomer(index);
+        } else {
+            throw new IOException("Cliente con ID " + id + " no encontrado.");
+        }
+    }
+    
+    
     public void updateCustomer(int i, Clientes cliente) throws IOException {
         flujo.seek(i*tamRegistro);
 
