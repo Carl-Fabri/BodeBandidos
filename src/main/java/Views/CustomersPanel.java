@@ -57,53 +57,53 @@ public class CustomersPanel extends javax.swing.JPanel {
         cargarDatosEnTabla();
         
         tbl.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-        @Override
-        public void valueChanged(ListSelectionEvent e) {
-            int selectedRow = tbl.getSelectedRow();
-            if (selectedRow >= 0) {
-                txtId.setText(tbl.getValueAt(selectedRow, 0).toString());
-                txtNom.setText(tbl.getValueAt(selectedRow, 1).toString());
-                txtApelli.setText(tbl.getValueAt(selectedRow, 2).toString());
-                txtFechaNac.setText(tbl.getValueAt(selectedRow, 3).toString());
-                txtDireccion.setText(tbl.getValueAt(selectedRow, 4).toString());
-                txtDnioRuc.setText(tbl.getValueAt(selectedRow, 5).toString());
-                txtTelef.setText(tbl.getValueAt(selectedRow, 6).toString());
-                txtCorreo.setText(tbl.getValueAt(selectedRow, 7).toString());
-                txtSexo.setText(tbl.getValueAt(selectedRow, 8).toString());
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                int selectedRow = tbl.getSelectedRow();
+                if (selectedRow >= 0) {
+                    txtNom.setText(tbl.getValueAt(selectedRow, 1).toString());
+                    txtApelli.setText(tbl.getValueAt(selectedRow, 2).toString());
+                    txtFechaNac.setText(tbl.getValueAt(selectedRow, 3).toString());
+                    txtDireccion.setText(tbl.getValueAt(selectedRow, 4).toString());
+                    txtDnioRuc.setText(tbl.getValueAt(selectedRow, 5).toString());
+                    txtTelef.setText(tbl.getValueAt(selectedRow, 6).toString());
+                    txtCorreo.setText(tbl.getValueAt(selectedRow, 7).toString());
+                    txtSexo.setText(tbl.getValueAt(selectedRow, 8).toString());
+                }
             }
-        }
         });
             
         // Configurar el listener del JTextField para la búsqueda
         txfSearchValue.getDocument().addDocumentListener(new DocumentListener() {
-        @Override
-        public void insertUpdate(DocumentEvent e) {
-            applyFilter();
-        }
-
-        @Override
-        public void removeUpdate(DocumentEvent e) {
-            applyFilter();
-        }
-
-        @Override
-        public void changedUpdate(DocumentEvent e) {
-            applyFilter();
-        }
-
-        private void applyFilter() {
-            String text = txfSearchValue.getText();
-            if (text.trim().isEmpty()) {
-                rowSorter.setRowFilter(null);
-                btnCleanSearch.setBackground(null);
-                btnCleanSearch.setForeground(null);
-            } else {
-                rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text, 1));
-                btnCleanSearch.setBackground(Color.RED);
-                btnCleanSearch.setForeground(Color.WHITE);
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                applyFilter();
             }
-        }
-             });
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                applyFilter();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                applyFilter();
+            }
+
+            private void applyFilter() {
+                String text = txfSearchValue.getText();
+                if (text.trim().isEmpty()) {
+                    rowSorter.setRowFilter(null);
+                    btnCleanSearch.setBackground(null);
+                    btnCleanSearch.setForeground(null);
+                } else {
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text, 1));
+                    btnCleanSearch.setBackground(Color.RED);
+                    btnCleanSearch.setForeground(Color.WHITE);
+                    tbl.clearSelection();
+                }
+            }
+        });
     }
 
     /**
@@ -128,7 +128,6 @@ public class CustomersPanel extends javax.swing.JPanel {
         Eliminar = new javax.swing.JButton();
         Editar = new javax.swing.JButton();
         txtSexo = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
         txfSearchValue = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -139,7 +138,6 @@ public class CustomersPanel extends javax.swing.JPanel {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        txtId = new javax.swing.JTextField();
         txtNom = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl = new javax.swing.JTable();
@@ -222,8 +220,6 @@ public class CustomersPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel1.setText("ID");
-
         txfSearchValue.setToolTipText("");
         txfSearchValue.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -255,12 +251,6 @@ public class CustomersPanel extends javax.swing.JPanel {
         jLabel10.setText("Sexo");
 
         jLabel11.setText("Buscar:");
-
-        txtId.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtIdActionPerformed(evt);
-            }
-        });
 
         txtNom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -294,18 +284,17 @@ public class CustomersPanel extends javax.swing.JPanel {
                         .addGap(2, 2, 2)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel3)
                                     .addComponent(jLabel2)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel10))
                                 .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(txtApelli, javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(txtFechaNac, javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(txtNom, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(txtId, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtApelli, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(txtFechaNac, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(txtNom, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
+                                    .addComponent(txtSexo))
                                 .addGap(27, 27, 27)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel6)
@@ -319,12 +308,8 @@ public class CustomersPanel extends javax.swing.JPanel {
                                         .addComponent(txtDnioRuc, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtTelef, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel10)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(txtSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(Eliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(Editar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -347,38 +332,19 @@ public class CustomersPanel extends javax.swing.JPanel {
                 .addGap(16, 16, 16)
                 .addComponent(jLabel5)
                 .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtApelli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                    .addGap(65, 65, 65)
-                                    .addComponent(Editar)
-                                    .addGap(29, 29, 29))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel10)
-                                        .addComponent(txtSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(jButton4)
-                                    .addGap(38, 38, 38)
-                                    .addComponent(Eliminar)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(txtId))
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel3)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jLabel2))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(12, 12, 12)
-                                        .addComponent(txtNom, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(33, 33, 33)))
-                        .addGap(19, 19, 19)
+                        .addComponent(Editar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(Eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -386,23 +352,27 @@ public class CustomersPanel extends javax.swing.JPanel {
                             .addComponent(jLabel11)
                             .addComponent(btnCleanSearch)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(txtDnioRuc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(9, 9, 9)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel7)
+                                    .addComponent(txtDnioRuc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtNom, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(9, 9, 9))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtTelef, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8)
-                            .addComponent(txtApelli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(7, 7, 7)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9)
                             .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10))))
                 .addGap(18, 18, 18))
         );
 
@@ -417,76 +387,10 @@ public class CustomersPanel extends javax.swing.JPanel {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-    private void cargarDatosEnTabla() {
-        
-    try {
-        archiv.openFile("customers.dat");
-
-        array = archiv.getClientesList();
-        
-        model.setRowCount(0); // Limpia el modelo antes de cargar nuevos datos
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-
-        for (Clientes cliente : array) {
-            Object[] row = {
-                cliente.getId(),
-                cliente.getNombre(),
-                cliente.getApellido(),
-                cliente.getFechadenacimiento().format(formatter),
-                cliente.getDireccion(),
-                cliente.getDnioruc(),
-                cliente.getTelefono(),
-                cliente.getCorreo(),
-                cliente.getSexo(),
-                cliente.getFechaactu().format(formatter),
-                cliente.getFechacrea().format(formatter)
-            };
-            model.addRow(row);
-        }
-        
-        archiv.closeFile();
-        }catch (IOException e) {
-            e.printStackTrace();
-        }
-         
-    }
     
     private void txtNomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomActionPerformed
-        String id = txtId.getText();
-        String nombre = txtNom.getText();
-        String apellido = txtApelli.getText();
-        String fechaNacimiento = txtFechaNac.getText();
-        String direccion = txtDnioRuc.getText();
-        String dniORuc = txtCorreo.getText();
-        String telefono = txtDireccion.getText();
-        String correo = txtTelef.getText();
-        String sexo = txtSexo.getText();
-
-        if (id.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || fechaNacimiento.isEmpty() || direccion.isEmpty() || dniORuc.isEmpty() || telefono.isEmpty() || correo.isEmpty() || sexo.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Error: Uno o más campos están vacíos.", "Error de validación", JOptionPane.ERROR_MESSAGE);
-        } else {
-            // Aquí iría el código para procesar los datos ingresados
-        }        // TODO add your handling code here:
+         Validation();
     }//GEN-LAST:event_txtNomActionPerformed
-
-    
-    private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
-        String id = txtId.getText();
-        String nombre = txtNom.getText();
-        String apellido = txtApelli.getText();
-        String fechaNacimiento = txtFechaNac.getText();
-        String direccion = txtDnioRuc.getText();
-        String dniORuc = txtCorreo.getText();
-        String telefono = txtDireccion.getText();
-        String correo = txtTelef.getText();
-        String sexo = txtSexo.getText();
-
-        if (id.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || fechaNacimiento.isEmpty() || direccion.isEmpty() || dniORuc.isEmpty() || telefono.isEmpty() || correo.isEmpty() || sexo.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Error: Uno o más campos están vacíos.", "Error de validación", JOptionPane.ERROR_MESSAGE);
-        } else {
-            // Aquí iría el código para procesar los datos ingresados
-        }        // TODO add your handling code here:
-    }//GEN-LAST:event_txtIdActionPerformed
 
     private void txfSearchValuePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_txfSearchValuePropertyChange
 
@@ -497,27 +401,14 @@ public class CustomersPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_txfSearchValueActionPerformed
 
     private void txtSexoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSexoActionPerformed
-        String id = txtId.getText();
-        String nombre = txtNom.getText();
-        String apellido = txtApelli.getText();
-        String fechaNacimiento = txtFechaNac.getText();
-        String direccion = txtDnioRuc.getText();
-        String dniORuc = txtCorreo.getText();
-        String telefono = txtDireccion.getText();
-        String correo = txtTelef.getText();
-        String sexo = txtSexo.getText();
-
-        if (id.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || fechaNacimiento.isEmpty() || direccion.isEmpty() || dniORuc.isEmpty() || telefono.isEmpty() || correo.isEmpty() || sexo.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Error: Uno o más campos están vacíos.", "Error de validación", JOptionPane.ERROR_MESSAGE);
-        } else {
-            // Aquí iría el código para procesar los datos ingresados
-        }        // TODO add your handling code here:
+        Validation();
     }//GEN-LAST:event_txtSexoActionPerformed
 
     private void EditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditarActionPerformed
-        int selectedRow = tbl.getSelectedRow();
-        if (selectedRow >= 0) {
-            String id = txtId.getText();
+        int fila = tbl.getSelectedRow();
+        
+        if (fila >= 0) {
+            
             String nombre = txtNom.getText();
             String apellido = txtApelli.getText();
             String fechaNacimiento = txtFechaNac.getText();
@@ -530,15 +421,14 @@ public class CustomersPanel extends javax.swing.JPanel {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
             try {
-                int idInt = Integer.parseInt(id);
+                int idInt = Integer.parseInt(tbl.getValueAt(fila, 0).toString());
                 int telefonoInt = Integer.parseInt(telefono);
                 int dniORucInt = Integer.parseInt(dniORuc);
 
                 LocalDate fechaNacimientoLocalDate = LocalDate.parse(fechaNacimiento, formatter);
                 LocalDate fechaActualizacionLocalDate = LocalDate.now();
 
-                // Actualizar el objeto en el ArrayList
-                Clientes cliente = array.get(selectedRow);
+                Clientes cliente = array.get(fila);
                 cliente.setId(idInt);
                 cliente.setNombre(nombre);
                 cliente.setApellido(apellido);
@@ -576,10 +466,9 @@ public class CustomersPanel extends javax.swing.JPanel {
         if(fila >= 0) {
             int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar la fila seleccionada?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
             try{
-                                // Obtener el ID desde la tabla, asumiendo que el ID está en la primera columna
+                                
                 int id = Integer.parseInt(tbl.getValueAt(fila, 0).toString());
                 
-                // Eliminar el cliente por ID
                 archiv.openFile("customers.dat");
                 archiv.eliminarClientePorId(id);
                 archiv.closeFile();  
@@ -606,44 +495,15 @@ public class CustomersPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCleanSearchActionPerformed
 
     private void txtDnioRucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDnioRucActionPerformed
-        String id = txtId.getText();
-        String nombre = txtNom.getText();
-        String apellido = txtApelli.getText();
-        String fechaNacimiento = txtFechaNac.getText();
-        String direccion = txtDnioRuc.getText();
-        String dniORuc = txtCorreo.getText();
-        String telefono = txtDireccion.getText();
-        String correo = txtTelef.getText();
-        String sexo = txtSexo.getText();
-
-        if (id.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || fechaNacimiento.isEmpty() || direccion.isEmpty() || dniORuc.isEmpty() || telefono.isEmpty() || correo.isEmpty() || sexo.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Error: Uno o más campos están vacíos.", "Error de validación", JOptionPane.ERROR_MESSAGE);
-        } else {
-            // Aquí iría el código para procesar los datos ingresados
-        }        // TODO add your handling code here:
+        Validation();
     }//GEN-LAST:event_txtDnioRucActionPerformed
 
     private void txtTelefActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefActionPerformed
-        String id = txtId.getText();
-        String nombre = txtNom.getText();
-        String apellido = txtApelli.getText();
-        String fechaNacimiento = txtFechaNac.getText();
-        String direccion = txtDnioRuc.getText();
-        String dniORuc = txtCorreo.getText();
-        String telefono = txtDireccion.getText();
-        String correo = txtTelef.getText();
-        String sexo = txtSexo.getText();
-
-        if (id.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || fechaNacimiento.isEmpty() || direccion.isEmpty() || dniORuc.isEmpty() || telefono.isEmpty() || correo.isEmpty() || sexo.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Error: Uno o más campos están vacíos.", "Error de validación", JOptionPane.ERROR_MESSAGE);
-        } else {
-            // Aquí iría el código para procesar los datos ingresados
-        }        // TODO add your handling code here:
+        Validation();
     }//GEN-LAST:event_txtTelefActionPerformed
-
+    
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
 
-        String id = txtId.getText();
         String nombre = txtNom.getText();
         String apellido = txtApelli.getText();
         String fechaNacimiento = txtFechaNac.getText();
@@ -652,121 +512,102 @@ public class CustomersPanel extends javax.swing.JPanel {
         String telefono = txtTelef.getText();
         String correo = txtCorreo.getText();
         String sexo = txtSexo.getText();
-        //si te fijas en la parte de abajo dice error y terminos raros no se exactamente como hacer el arreglo, los datos son en int ya que son numero ID fechas dni telefono
+        
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-
         
         try
         {
-                int idInt = Integer.parseInt(id);
-                int telefonoInt = Integer.parseInt(telefono);
-                int dniORucInt = Integer.parseInt(dniORuc);
+            archiv.openFile("customers.dat");
 
-                LocalDate fechaNacimientoLocalDate = LocalDate.parse(fechaNacimiento, formatter);
+            int idInt = archiv.newId();
+            int telefonoInt = Integer.parseInt(telefono);
+            int dniORucInt = Integer.parseInt(dniORuc);
 
-                LocalDate fechaActualizacionLocalDate = LocalDate.now();
-                LocalDate fechaCreacionLocalDate = LocalDate.now();
+            LocalDate fechaNacimientoLocalDate = LocalDate.parse(fechaNacimiento, formatter);
 
-                Clientes cliente = new Clientes(nombre, apellido, direccion, correo, sexo, idInt, fechaNacimientoLocalDate, dniORucInt, telefonoInt, fechaActualizacionLocalDate, fechaCreacionLocalDate);
-                
-                /*
-                array.add(cliente);
-                */
+            LocalDate fechaActualizacionLocalDate = LocalDate.now();
+            LocalDate fechaCreacionLocalDate = LocalDate.now();
 
-                archiv.openFile("customers.dat");
-                archiv.addCustomer(cliente);
-                archiv.closeFile();
+            Clientes cliente = new Clientes(nombre, apellido, direccion, correo, sexo, idInt, fechaNacimientoLocalDate, dniORucInt, telefonoInt, fechaActualizacionLocalDate, fechaCreacionLocalDate);
 
-                DefaultTableModel model = (DefaultTableModel) tbl.getModel();
-                
-                //model.addRow(new Object[]{id, nombre, apellido, fechaNacimiento, direccion, dniORucInt, telefono, correo, sexo, fechaActualizacionLocalDate, fechaCreacionLocalDate});
-                cargarDatosEnTabla();
-                limpiarCampos();
-                
-                limpiarCampos();
-                
-                
+            archiv.addCustomer(cliente);
+            archiv.closeFile();
 
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this, "Error: Uno o más campos no son números enteros válidos.", "Error de conversión", JOptionPane.ERROR_MESSAGE);
-            } catch (DateTimeParseException e) {
-                JOptionPane.showMessageDialog(this, "Error: El formato de fecha no es válido.", "Error de formato de fecha", JOptionPane.ERROR_MESSAGE);
-            }catch(IOException e)
-            {
-                JOptionPane.showMessageDialog(null,"No se pudo grabar en el archivo");
-            }
+            DefaultTableModel model = (DefaultTableModel) tbl.getModel();
+
+            cargarDatosEnTabla();
+            limpiarCampos();
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Error: Uno o más campos no son números enteros válidos.", "Error de conversión", JOptionPane.ERROR_MESSAGE);
+        } catch (DateTimeParseException e) {
+            JOptionPane.showMessageDialog(this, "Error: El formato de fecha no es válido.", "Error de formato de fecha", JOptionPane.ERROR_MESSAGE);
+        }catch(IOException e)
+        {
+            JOptionPane.showMessageDialog(null,"No se pudo grabar en el archivo");
+        }
     }
     
-    
-        private void limpiarCampos() {
-            txtId.setText("");
-            txtNom.setText("");
-            txtApelli.setText("");
-            txtFechaNac.setText("");
-            txtDnioRuc.setText("");
-            txtCorreo.setText("");
-            txtDireccion.setText("");
-            txtTelef.setText("");
-            txtSexo.setText("");
-            txtId.requestFocus();
+    private void limpiarCampos() {
+        txtNom.setText("");
+        txtApelli.setText("");
+        txtFechaNac.setText("");
+        txtDnioRuc.setText("");
+        txtCorreo.setText("");
+        txtDireccion.setText("");
+        txtTelef.setText("");
+        txtSexo.setText("");
+        tbl.clearSelection();  
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void txtDireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDireccionActionPerformed
-        String id = txtId.getText();
-        String nombre = txtNom.getText();
-        String apellido = txtApelli.getText();
-        String fechaNacimiento = txtFechaNac.getText();
-        String direccion = txtDnioRuc.getText();
-        String dniORuc = txtCorreo.getText();
-        String telefono = txtDireccion.getText();
-        String correo = txtTelef.getText();
-        String sexo = txtSexo.getText();
-
-        if (id.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || fechaNacimiento.isEmpty() || direccion.isEmpty() || dniORuc.isEmpty() || telefono.isEmpty() || correo.isEmpty() || sexo.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Error: Uno o más campos están vacíos.", "Error de validación", JOptionPane.ERROR_MESSAGE);
-        } else {
-            // Aquí iría el código para procesar los datos ingresados
-        }        // TODO add your handling code here:
+        Validation();
     }//GEN-LAST:event_txtDireccionActionPerformed
 
     private void txtCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCorreoActionPerformed
-        String id = txtId.getText();
-        String nombre = txtNom.getText();
-        String apellido = txtApelli.getText();
-        String fechaNacimiento = txtFechaNac.getText();
-        String direccion = txtDnioRuc.getText();
-        String dniORuc = txtCorreo.getText();
-        String telefono = txtDireccion.getText();
-        String correo = txtTelef.getText();
-        String sexo = txtSexo.getText();
-
-        if (id.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || fechaNacimiento.isEmpty() || direccion.isEmpty() || dniORuc.isEmpty() || telefono.isEmpty() || correo.isEmpty() || sexo.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Error: Uno o más campos están vacíos.", "Error de validación", JOptionPane.ERROR_MESSAGE);
-        } else {
-            // Aquí iría el código para procesar los datos ingresados
-        }        // TODO add your handling code here:
+        Validation();       // TODO add your handling code here:
     }//GEN-LAST:event_txtCorreoActionPerformed
 
     private void txtFechaNacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaNacActionPerformed
-        String id = txtId.getText();
-        String nombre = txtNom.getText();
-        String apellido = txtApelli.getText();
-        String fechaNacimiento = txtFechaNac.getText();
-        String direccion = txtDnioRuc.getText();
-        String dniORuc = txtCorreo.getText();
-        String telefono = txtDireccion.getText();
-        String correo = txtTelef.getText();
-        String sexo = txtSexo.getText();
-
-        if (id.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || fechaNacimiento.isEmpty() || direccion.isEmpty() || dniORuc.isEmpty() || telefono.isEmpty() || correo.isEmpty() || sexo.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Error: Uno o más campos están vacíos.", "Error de validación", JOptionPane.ERROR_MESSAGE);
-        } else {
-
-        }
+        Validation();
     }//GEN-LAST:event_txtFechaNacActionPerformed
 
     private void txtApelliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApelliActionPerformed
-        String id = txtId.getText();
+        Validation();
+    }//GEN-LAST:event_txtApelliActionPerformed
+
+        private void cargarDatosEnTabla() {
+        try {
+        archiv.openFile("customers.dat");
+        array = archiv.getClientesList();
+        
+        model.setRowCount(0);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+        for (Clientes cliente : array) {
+            Object[] row = {
+                cliente.getId(),
+                cliente.getNombre(),
+                cliente.getApellido(),
+                cliente.getFechadenacimiento().format(formatter),
+                cliente.getDireccion(),
+                cliente.getDnioruc(),
+                cliente.getTelefono(),
+                cliente.getCorreo(),
+                cliente.getSexo(),
+                cliente.getFechaactu().format(formatter),
+                cliente.getFechacrea().format(formatter)
+            };
+            model.addRow(row);
+        }
+        
+        archiv.closeFile();
+        }catch (IOException e) {
+            e.printStackTrace();
+        } 
+    }
+    
+    private void Validation(){
         String nombre = txtNom.getText();
         String apellido = txtApelli.getText();
         String fechaNacimiento = txtFechaNac.getText();
@@ -776,20 +617,19 @@ public class CustomersPanel extends javax.swing.JPanel {
         String correo = txtTelef.getText();
         String sexo = txtSexo.getText();
 
-        if (id.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || fechaNacimiento.isEmpty() || direccion.isEmpty() || dniORuc.isEmpty() || telefono.isEmpty() || correo.isEmpty() || sexo.isEmpty()) {
+        if (nombre.isEmpty() || apellido.isEmpty() || fechaNacimiento.isEmpty() || direccion.isEmpty() || dniORuc.isEmpty() || telefono.isEmpty() || correo.isEmpty() || sexo.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Error: Uno o más campos están vacíos.", "Error de validación", JOptionPane.ERROR_MESSAGE);
         } else {
             // Aquí iría el código para procesar los datos ingresados
-        }        // TODO add your handling code here:
-    }//GEN-LAST:event_txtApelliActionPerformed
-
+        }  
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Editar;
     private javax.swing.JButton Eliminar;
     private javax.swing.JButton btnCleanSearch;
     private javax.swing.JButton jButton4;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
@@ -809,7 +649,6 @@ public class CustomersPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtDnioRuc;
     private javax.swing.JTextField txtFechaNac;
-    private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtNom;
     private javax.swing.JTextField txtSexo;
     private javax.swing.JTextField txtTelef;

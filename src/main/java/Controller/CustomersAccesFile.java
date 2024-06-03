@@ -35,7 +35,6 @@ public class CustomersAccesFile {
     public void openFile(String archive) throws IOException
     {
         flujo = new RandomAccessFile(archive,"rw");
-        // ceil redondea al entero superior : ceil(2.9) --> 2, ceil(2.1) --> 2 
         countRegisters = (int)Math.ceil((double)flujo.length()/(double)tamRegistro);
     }   
     
@@ -65,17 +64,7 @@ public class CustomersAccesFile {
         flujo.writeUTF(customer.getFechacrea().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
         countRegisters++;
     }
-    
-        private LocalDate parseDate(String date) {
-        try {
-            if (date == null || date.trim().isEmpty()) {
-                return LocalDate.MIN; // Devuelve una fecha mínima en lugar de null
-            }
-            return LocalDate.parse(date, DATE_FORMATTER);
-        } catch (DateTimeParseException e) {
-            return LocalDate.MIN; // Maneja errores devolviendo una fecha mínima
-        }
-    }
+         
     public int buscarIndicePorId(int id) throws IOException {
         for (int i = 0; i < getNumRegistros(); i++) {
             flujo.seek(i*tamRegistro);
@@ -84,70 +73,7 @@ public class CustomersAccesFile {
                 return i;
         }
     }
-        return -1; // Indica que no se encontró el ID
-    }
-    
-    public void actualizarClientePorId(int id, Clientes cliente) throws IOException {
-        int index = buscarIndicePorId(id);
-        if (index != -1) {
-            updateCustomer(index, cliente);
-        } else {
-            throw new IOException("Cliente con ID " + id + " no encontrado.");
-        }
-    }
-    
-    
-    public void eliminarClientePorId(int id) throws IOException {
-        //File tempFile = new File("temp.dat");
-        List<Clientes> Clientes = new ArrayList<>();
-        
-
-        for (int i = 0; i < getNumRegistros(); ++i) {
-            flujo.seek(i * tamRegistro);
-            if (id != -1) {
-                Clientes cliente = obtenerUnCliente(i);
-                if (cliente.getId() != id) {
-                    Clientes.add(cliente);
-                }
-            }
-        }
-        flujo.setLength(0);
-        countRegisters = 0;
-
-        for (Clientes cliente : Clientes){
-           flujo.seek(flujo.length());  
-           addCustomer(cliente);
-        }
-        
-        
-            //Files.move(tempFile.toPath(), new File(flujo.getFD().toString()).toPath(), StandardCopyOption.REPLACE_EXISTING);
-            
-            //flujo = new RandomAccessFile(flujo.getFD().toString(), "rw");
-        //flujo.setLength(0);//deleteCustomer(index);
-    }        
-    
-
-    
-    public void updateCustomer(int i, Clientes cliente) throws IOException {
-        flujo.seek(i*tamRegistro);
-
-        flujo.writeInt(cliente.getId());
-        flujo.writeUTF(cliente.getNombre());
-        flujo.writeUTF(cliente.getApellido());
-        flujo.writeUTF(cliente.getDireccion());
-        flujo.writeUTF(cliente.getCorreo());
-        flujo.writeUTF(cliente.getSexo());
-        flujo.writeUTF(cliente.getFechadenacimiento().format(DATE_FORMATTER));
-        flujo.writeInt(cliente.getDnioruc());
-        flujo.writeInt(cliente.getTelefono());
-        flujo.writeUTF(cliente.getFechaactu().format(DATE_FORMATTER));
-        flujo.writeUTF(cliente.getFechacrea().format(DATE_FORMATTER));
-    }    
-    
-    public void deleteCustomer(int index) throws IOException {
-        //flujo.seek(index*tamRegistro);
-        //Clientes empyClient = new Clientes("", "", "", "", "",-1, LocalDate.MIN, -1, -1, LocalDate.MIN, LocalDate.MIN);
-        //updateCustomer(index, empyClient);        
+        return -1;
     }
     
     public Clientes obtenerUnEmpleado(int i) throws IOException{
@@ -171,6 +97,66 @@ public class CustomersAccesFile {
     public int getNumRegistros(){
         return countRegisters;
     }
+    
+    public int newId() throws IOException {
+        int maxId = 0;
+        for (int i = 0; i < getNumRegistros(); i++) {
+            flujo.seek(i * tamRegistro);
+            int id = flujo.readInt();
+            if (id > maxId) {
+                maxId = id;
+            }
+        }
+        maxId++;
+        
+        return maxId;
+    }
+    
+    public void actualizarClientePorId(int id, Clientes cliente) throws IOException {
+        int index = buscarIndicePorId(id);
+        if (index != -1) {
+            updateCustomer(index, cliente);
+        } else {
+            throw new IOException("Cliente con ID " + id + " no encontrado.");
+        }
+    }
+    
+    public void eliminarClientePorId(int id) throws IOException {
+        List<Clientes> Clientes = new ArrayList<>();
+       
+        for (int i = 0; i < getNumRegistros(); ++i) {
+            flujo.seek(i * tamRegistro);
+            if (id != -1) {
+                Clientes cliente = obtenerUnCliente(i);
+                if (cliente.getId() != id) {
+                    Clientes.add(cliente);
+                }
+            }
+        }
+        flujo.setLength(0);
+        countRegisters = 0;
+
+        for (Clientes cliente : Clientes){
+           flujo.seek(flujo.length());  
+           addCustomer(cliente);
+        }
+    }
+    
+    public void updateCustomer(int i, Clientes cliente) throws IOException {
+        flujo.seek(i*tamRegistro);
+
+        flujo.writeInt(cliente.getId());
+        flujo.writeUTF(cliente.getNombre());
+        flujo.writeUTF(cliente.getApellido());
+        flujo.writeUTF(cliente.getDireccion());
+        flujo.writeUTF(cliente.getCorreo());
+        flujo.writeUTF(cliente.getSexo());
+        flujo.writeUTF(cliente.getFechadenacimiento().format(DATE_FORMATTER));
+        flujo.writeInt(cliente.getDnioruc());
+        flujo.writeInt(cliente.getTelefono());
+        flujo.writeUTF(cliente.getFechaactu().format(DATE_FORMATTER));
+        flujo.writeUTF(cliente.getFechacrea().format(DATE_FORMATTER));
+    }
 
     public Clientes obtenerUnCliente(int index) throws IOException {
         flujo.seek(index * tamRegistro);
@@ -190,8 +176,6 @@ public class CustomersAccesFile {
         return new Clientes(nombre, apellido, direccion, correo, sexo, id, fechadenacimiento, dnioruc, telefono, fechaactu, fechacrea);
     }
     
-
-
     public List<Clientes> getClientesList() throws IOException {
         List<Clientes> clientes = new ArrayList<>();
         
@@ -203,7 +187,5 @@ public class CustomersAccesFile {
 
         return clientes;
     }
-    
-    
-
+   
 }

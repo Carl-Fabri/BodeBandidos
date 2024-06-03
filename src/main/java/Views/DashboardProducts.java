@@ -6,6 +6,7 @@ package Views;
 
 import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.BorderLayout;
+import javax.print.attribute.standard.PresentationDirection;
 import javax.swing.JPanel;
 
 /**
@@ -55,6 +56,11 @@ public class DashboardProducts extends javax.swing.JFrame {
         lblTitle.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         lblTitle.setForeground(new java.awt.Color(255, 255, 255));
         lblTitle.setText("BodeBandidos");
+        lblTitle.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblTitleMouseClicked(evt);
+            }
+        });
 
         btnCustomersPan.setBackground(new java.awt.Color(255, 102, 102));
         btnCustomersPan.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -218,6 +224,11 @@ public class DashboardProducts extends javax.swing.JFrame {
         CategoriesPanel pl = new CategoriesPanel();
         ShowJPanel(pl);
     }//GEN-LAST:event_btnCategoriesPanActionPerformed
+
+    private void lblTitleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTitleMouseClicked
+        Principal pl = new Principal();
+        ShowJPanel(pl);
+    }//GEN-LAST:event_lblTitleMouseClicked
 
     public void ShowJPanel(JPanel p){
         p.setSize(700, 400);
