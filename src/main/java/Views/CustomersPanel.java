@@ -420,11 +420,9 @@ public class CustomersPanel extends javax.swing.JPanel {
     private void cargarDatosEnTabla() {
         
     try {
-            
         archiv.openFile("customers.dat");
 
         array = archiv.getClientesList();
-
         
         model.setRowCount(0); // Limpia el modelo antes de cargar nuevos datos
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -450,12 +448,8 @@ public class CustomersPanel extends javax.swing.JPanel {
         }catch (IOException e) {
             e.printStackTrace();
         }
-            
-            
-
+         
     }
-    
-    
     
     private void txtNomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomActionPerformed
         String id = txtId.getText();
@@ -588,7 +582,10 @@ public class CustomersPanel extends javax.swing.JPanel {
                 // Eliminar el cliente por ID
                 archiv.openFile("customers.dat");
                 archiv.eliminarClientePorId(id);
-                archiv.closeFile();    
+                archiv.closeFile();  
+                
+                cargarDatosEnTabla();
+                limpiarCampos();
             }
             catch(IOException e)
             {
@@ -681,8 +678,14 @@ public class CustomersPanel extends javax.swing.JPanel {
                 archiv.closeFile();
 
                 DefaultTableModel model = (DefaultTableModel) tbl.getModel();
-                model.addRow(new Object[]{id, nombre, apellido, fechaNacimiento, direccion, dniORucInt, telefono, correo, sexo, fechaActualizacionLocalDate, fechaCreacionLocalDate});
+                
+                //model.addRow(new Object[]{id, nombre, apellido, fechaNacimiento, direccion, dniORucInt, telefono, correo, sexo, fechaActualizacionLocalDate, fechaCreacionLocalDate});
+                cargarDatosEnTabla();
                 limpiarCampos();
+                
+                limpiarCampos();
+                
+                
 
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(this, "Error: Uno o más campos no son números enteros válidos.", "Error de conversión", JOptionPane.ERROR_MESSAGE);

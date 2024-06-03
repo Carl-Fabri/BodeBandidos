@@ -4,12 +4,20 @@
  */
 package Controller;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import model.Clientes;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.RandomAccessFile;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -58,15 +66,25 @@ public class CustomersAccesFile {
         countRegisters++;
     }
     
-        public int buscarIndicePorId(int id) throws IOException {
-        for (int i = 0; i < getNumRegistros(); i++) {
-        flujo.seek(i*tamRegistro);
-        int currentId = flujo.readInt();
-        if (currentId == id) {
-            return i;
+        private LocalDate parseDate(String date) {
+        try {
+            if (date == null || date.trim().isEmpty()) {
+                return LocalDate.MIN; // Devuelve una fecha mínima en lugar de null
+            }
+            return LocalDate.parse(date, DATE_FORMATTER);
+        } catch (DateTimeParseException e) {
+            return LocalDate.MIN; // Maneja errores devolviendo una fecha mínima
         }
     }
-    return -1; // Indica que no se encontró el ID
+    public int buscarIndicePorId(int id) throws IOException {
+        for (int i = 0; i < getNumRegistros(); i++) {
+            flujo.seek(i*tamRegistro);
+            int currentId = flujo.readInt();
+            if (currentId == id) {
+                return i;
+        }
+    }
+        return -1; // Indica que no se encontró el ID
     }
     
     public void actualizarClientePorId(int id, Clientes cliente) throws IOException {
@@ -78,15 +96,37 @@ public class CustomersAccesFile {
         }
     }
     
-    public void eliminarClientePorId(int id) throws IOException {
-        int index = buscarIndicePorId(id);
-        if (index != -1) {
-            deleteCustomer(index);
-        } else {
-            throw new IOException("Cliente con ID " + id + " no encontrado.");
-        }
-    }
     
+    public void eliminarClientePorId(int id) throws IOException {
+        //File tempFile = new File("temp.dat");
+        List<Clientes> Clientes = new ArrayList<>();
+        
+
+        for (int i = 0; i < getNumRegistros(); ++i) {
+            flujo.seek(i * tamRegistro);
+            if (id != -1) {
+                Clientes cliente = obtenerUnCliente(i);
+                if (cliente.getId() != id) {
+                    Clientes.add(cliente);
+                }
+            }
+        }
+        flujo.setLength(0);
+        countRegisters = 0;
+
+        for (Clientes cliente : Clientes){
+           flujo.seek(flujo.length());  
+           addCustomer(cliente);
+        }
+        
+        
+            //Files.move(tempFile.toPath(), new File(flujo.getFD().toString()).toPath(), StandardCopyOption.REPLACE_EXISTING);
+            
+            //flujo = new RandomAccessFile(flujo.getFD().toString(), "rw");
+        //flujo.setLength(0);//deleteCustomer(index);
+    }        
+    
+
     
     public void updateCustomer(int i, Clientes cliente) throws IOException {
         flujo.seek(i*tamRegistro);
@@ -105,24 +145,12 @@ public class CustomersAccesFile {
     }    
     
     public void deleteCustomer(int index) throws IOException {
-        flujo.seek(index*tamRegistro);
-
-        // Marcar el registro como eliminado, por ejemplo, estableciendo el ID en -1
-        flujo.writeInt(-1);
-        flujo.writeUTF(String.format("%-20s", ""));
-        flujo.writeUTF(String.format("%-20s", ""));
-        flujo.writeUTF(String.format("%-20s", ""));
-        flujo.writeUTF(String.format("%-20s", ""));
-        flujo.writeUTF(String.format("%-20s", ""));
-        flujo.writeUTF(String.format("%-20s", ""));
-        flujo.writeInt(0);
-        flujo.writeInt(0);
-        flujo.writeUTF(String.format("%-20s", ""));
-        flujo.writeUTF(String.format("%-20s", ""));
+        //flujo.seek(index*tamRegistro);
+        //Clientes empyClient = new Clientes("", "", "", "", "",-1, LocalDate.MIN, -1, -1, LocalDate.MIN, LocalDate.MIN);
+        //updateCustomer(index, empyClient);        
     }
     
-    public Clientes obtenerUnEmpleado(int i) throws IOException
-    {
+    public Clientes obtenerUnEmpleado(int i) throws IOException{
         flujo.seek(i*tamRegistro);
 
         int id = flujo.readInt();
@@ -140,14 +168,13 @@ public class CustomersAccesFile {
         return new Clientes(nombre, apellido, direccion, correo, sexo, id, fechadenacimiento, dnioruc, telefono, fechaactu, fechacrea);     
     }
 
-    public int getNumRegistros()
-    {
+    public int getNumRegistros(){
         return countRegisters;
     }
 
     public Clientes obtenerUnCliente(int index) throws IOException {
         flujo.seek(index * tamRegistro);
-
+        
         int id = flujo.readInt();
         String nombre = flujo.readUTF().trim();
         String apellido = flujo.readUTF().trim();
@@ -162,6 +189,8 @@ public class CustomersAccesFile {
 
         return new Clientes(nombre, apellido, direccion, correo, sexo, id, fechadenacimiento, dnioruc, telefono, fechaactu, fechacrea);
     }
+    
+
 
     public List<Clientes> getClientesList() throws IOException {
         List<Clientes> clientes = new ArrayList<>();
@@ -171,7 +200,7 @@ public class CustomersAccesFile {
                 Clientes cliente = obtenerUnCliente(i);
                 clientes.add(cliente);
             }
-        
+
         return clientes;
     }
     
