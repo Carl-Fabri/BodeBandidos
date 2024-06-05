@@ -8,6 +8,6 @@ package Information;
  *
  * @author Carlos Fabricio
  */
-public class Customers {
+public class CategoryAccesFile {
     
 }

@@ -3,10 +3,24 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package Views;
+import Information.ProductAccesFile;
+import java.awt.Color;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import model.Clientes;
 import model.Product;
 
 /**
@@ -15,18 +29,111 @@ import model.Product;
  */
 public class ProductPanel extends javax.swing.JPanel {
 
-    private ArrayList<Product> productsList;
     DefaultTableModel model;
-    ArrayList<Object> rowData;
+    private ArrayList<Product> array;
+    private TableRowSorter<DefaultTableModel> rowSorter;
+    ProductAccesFile file;
     
     /**
      * Creates new form ProductPanel
      */
     public ProductPanel() {
         initComponents();
-        model = (DefaultTableModel) TxtArea.getModel();
-        rowData = new ArrayList<>();
+        model = new DefaultTableModel();    
+        model.addColumn("ID");
+        model.addColumn("Nombre");
+        model.addColumn("Categoria");
+        model.addColumn("Marca");
+        model.addColumn("Precio");
+        model.addColumn("Fecha de actualización");
+        model.addColumn("Fecha de creación");
+        
+        tblProductBox.setModel(model);
+        rowSorter = new TableRowSorter<>(model);
+        tblProductBox.setRowSorter(rowSorter);
+        file = new ProductAccesFile();
+
+        loadProductsInTable();
+        
+          tblProductBox.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                int selectedRow = tblProductBox.getSelectedRow();
+                if (selectedRow >= 0) {
+                    txtName.setText(tblProductBox.getValueAt(selectedRow, 1).toString());
+                    txtCategory.setText(tblProductBox.getValueAt(selectedRow, 2).toString());
+                    txtBrand.setText(tblProductBox.getValueAt(selectedRow, 3).toString());
+                    txtPrice.setText(tblProductBox.getValueAt(selectedRow, 4).toString());
+                }
+            }
+        });
+        
+        txtProductName.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                applyFilter();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                applyFilter();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                applyFilter();
+            }
+
+            private void applyFilter() {
+                String text = txtProductName.getText();
+                if (text.trim().isEmpty()) {
+                    rowSorter.setRowFilter(null);
+                    btnClearSearch.setBackground(null);
+                    btnClearSearch.setForeground(null);
+                } else {
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text, 1));
+                    btnClearSearch.setBackground(Color.RED);
+                    btnClearSearch.setForeground(Color.WHITE);
+                    tblProductBox.clearSelection();
+                }
+            }
+            }); 
+        
+        }
+    
+    private void loadProductsInTable(){
+        try {
+            file.openFile("product.dat");
+            array = file.getProductList();
+
+            model.setRowCount(0);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+            for (Product product : array) {
+                Object[] row = {
+                    product.getId(),
+                    product.getName(),
+                    product.getCategory(),
+                    product.getMark(),
+                    product.getPrice(),
+                    product.getUpdatedAt().format(formatter),
+                    product.getCreatedAt().format(formatter),
+                };
+                model.addRow(row);
+            }
+
+        file.closeFile();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+    
+    private void cleanFields() {
+        txtName.setText("");
+        txtCategory.setText("");
+        txtBrand.setText("");
+        txtPrice.setText("");
+    }  
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -38,21 +145,21 @@ public class ProductPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        TxtPrecio = new javax.swing.JTextField();
+        txtPrice = new javax.swing.JTextField();
         BtnEditar = new javax.swing.JButton();
         BtnCrear = new javax.swing.JButton();
         BtnEliminar = new javax.swing.JButton();
-        TxtCategoria = new javax.swing.JTextField();
+        txtCategory = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        TxtNombre = new javax.swing.JTextField();
+        txtName = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        TxtProductName = new javax.swing.JTextField();
+        txtProductName = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        BtnBuscar = new javax.swing.JButton();
-        TxtMarca = new javax.swing.JTextField();
+        btnClearSearch = new javax.swing.JButton();
+        txtBrand = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        TxtArea = new javax.swing.JTable();
+        tblProductBox = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(680, 400));
@@ -81,9 +188,9 @@ public class ProductPanel extends javax.swing.JPanel {
             }
         });
 
-        TxtCategoria.addActionListener(new java.awt.event.ActionListener() {
+        txtCategory.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TxtCategoriaActionPerformed(evt);
+                txtCategoryActionPerformed(evt);
             }
         });
 
@@ -94,35 +201,34 @@ public class ProductPanel extends javax.swing.JPanel {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel5.setText("Productos");
 
-        TxtProductName.setText("Nombre del producto");
-        TxtProductName.addActionListener(new java.awt.event.ActionListener() {
+        txtProductName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TxtProductNameActionPerformed(evt);
+                txtProductNameActionPerformed(evt);
             }
         });
 
         jLabel3.setText("Marca");
 
-        BtnBuscar.setBackground(java.awt.SystemColor.control);
-        BtnBuscar.setText("Buscar");
-        BtnBuscar.addActionListener(new java.awt.event.ActionListener() {
+        btnClearSearch.setBackground(java.awt.SystemColor.control);
+        btnClearSearch.setText("Clean filters");
+        btnClearSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnBuscarActionPerformed(evt);
+                btnClearSearchActionPerformed(evt);
             }
         });
 
-        TxtArea.setModel(new javax.swing.table.DefaultTableModel(
+        tblProductBox.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Nombre", "Precio", "Categoria", "Marca"
+                "ID", "Nombre", "Categoria", "Marca", "Precio", "Fecha de actualización", "Fecha de creación"
             }
         ));
-        jScrollPane1.setViewportView(TxtArea);
+        jScrollPane1.setViewportView(tblProductBox);
 
         jLabel4.setText("Precio");
 
@@ -138,29 +244,28 @@ public class ProductPanel extends javax.swing.JPanel {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel1)
-                                    .addComponent(TxtNombre)
-                                    .addComponent(jLabel2)
-                                    .addComponent(TxtCategoria)
-                                    .addComponent(jLabel3)
-                                    .addComponent(TxtMarca)
-                                    .addComponent(jLabel4)
-                                    .addComponent(TxtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(TxtProductName)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(BtnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(BtnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(BtnEditar)
-                                .addGap(22, 22, 22)
-                                .addComponent(BtnEliminar)))
+                            .addComponent(BtnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtName, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtCategory, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtBrand, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtPrice, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
+                            .addComponent(BtnCrear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                    .addComponent(txtProductName)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(btnClearSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(BtnEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(43, 43, 43))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -169,42 +274,43 @@ public class ProductPanel extends javax.swing.JPanel {
                 .addContainerGap(11, Short.MAX_VALUE)
                 .addComponent(jLabel5)
                 .addGap(29, 29, 29)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnClearSearch)
+                            .addComponent(txtProductName, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(TxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(13, 13, 13)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(TxtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(TxtMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtBrand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(TxtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(BtnBuscar)
-                            .addComponent(TxtProductName, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(19, 19, 19)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BtnCrear)
+                        .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(BtnCrear)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(BtnEditar)
                     .addComponent(BtnEliminar))
-                .addGap(25, 25, 25))
+                .addGap(32, 32, 32))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 687, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -213,123 +319,136 @@ public class ProductPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEditarActionPerformed
-        int selectedRow = TxtArea.getSelectedRow();
-        if (selectedRow != -1) {
-            String productName = (String) TxtArea.getValueAt(selectedRow, 0); // Nombre del producto en la primera columna
-            for (Product product : productsList) {
-                if (product.getName().equalsIgnoreCase(productName)) {
-                    product.setName((String) TxtArea.getValueAt(selectedRow, 0));
-                    product.setCategory((String) TxtArea.getValueAt(selectedRow, 1));
-                    product.setMark((String) TxtArea.getValueAt(selectedRow, 2));
-                    product.setPrice(Double.parseDouble((String) TxtArea.getValueAt(selectedRow,
-                        3)));
-            JOptionPane.showMessageDialog(this,
-                "Producto editado", "Éxito",
-                JOptionPane.INFORMATION_MESSAGE);
-            break;
-        }
-        }
+        int fila = tblProductBox.getSelectedRow();
+        
+        if (fila >= 0) {
+            
+            String name = txtName.getText();
+            String category = txtCategory.getText();
+            String brand = txtBrand.getText();
+            String price = txtPrice.getText();
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+            try {
+                int idInt = Integer.parseInt(tblProductBox.getValueAt(fila, 0).toString());
+                double db_price = Double.parseDouble(price);
+                
+                LocalDate fechaActualizacionLocalDate = LocalDate.now();
+
+                Product product = array.get(fila);
+                product.setId(idInt);
+                product.setName(name);
+                product.setCategory(category);
+                product.setMark(brand);
+                product.setPrice(db_price);
+                product.setUpdatedAt(fechaActualizacionLocalDate);
+                
+                file.openFile("product.dat");
+                file.updateProductById(idInt,product);
+                file.closeFile();  
+
+                loadProductsInTable();
+                cleanFields();
+
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Error: Uno o más campos no son números enteros válidos.", "Error de conversión", JOptionPane.ERROR_MESSAGE);
+            } catch (DateTimeParseException e) {
+                JOptionPane.showMessageDialog(this, "Error: El formato de fecha no es válido.", "Error de formato de fecha", JOptionPane.ERROR_MESSAGE);
+            }
+            catch(IOException e)
+            {
+                JOptionPane.showMessageDialog(null,"No se pudo actualizar");
+            }
         } else {
-            JOptionPane.showMessageDialog(this, "Selecciona un producto para editar", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No se ha seleccionado ninguna fila para editar.", "Error de selección", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_BtnEditarActionPerformed
 
     private void BtnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCrearActionPerformed
 
-        //Traemos los textos ingresado
-        String name = TxtNombre.getText();
-        String category = TxtCategoria.getText();
-        String mark = TxtMarca.getText();
-        Double price = Double.parseDouble(TxtPrecio.getText());
-
-        //Instanciamos un arraylist de productos
-        productsList= new ArrayList<>();
-
-        //Creamos un objeto producto
-        Product product = new Product(name,category,mark,price);
-
-        //agregamos el objeto al arraylist
-        productsList.add(product);
-
-        //establecer campos en blanco
-        TxtNombre.setText("");
-        TxtCategoria.setText("");
-        TxtMarca.setText("");
-        TxtPrecio.setText("");
+        String nombre = txtName.getText();
+        String category = txtCategory.getText();
+        String brand = txtBrand.getText();
+        String price = txtPrice.getText();
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-mm-yyyy");
+        
+        try {
+            file.openFile("product.dat");
+            
+            int idInt = file.newId();
+            double db_price = Double.parseDouble(price);
+            
+            LocalDate updatedAt = LocalDate.now();
+            LocalDate createdAt = LocalDate.now();
+            
+            Product product = new Product(idInt, nombre, category, brand, db_price, updatedAt, createdAt);
+            
+            file.addProduct(product);
+            file.closeFile();
+            
+            DefaultTableModel model = (DefaultTableModel) tblProductBox.getModel();
+            loadProductsInTable();
+            cleanFields();
+            
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Error: Uno o más campos no son números enteros válidos.", "Error de conversión", JOptionPane.ERROR_MESSAGE);
+        } catch (DateTimeParseException e) {
+            JOptionPane.showMessageDialog(this, "Error: El formato de fecha no es válido.", "Error de formato de fecha", JOptionPane.ERROR_MESSAGE);
+        }catch(IOException e){
+            JOptionPane.showMessageDialog(null,"No se pudo grabar en el archivo");
+        }
+        
     }//GEN-LAST:event_BtnCrearActionPerformed
 
     private void BtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliminarActionPerformed
-
-        int selectedRow = TxtArea.getSelectedRow();
-        if (selectedRow != -1) {
-            String productName = (String) TxtArea.getValueAt(selectedRow, 0); // Nombre del producto en la primera columna
-            for (Product product : productsList) {
-                if (product.getName().equalsIgnoreCase(productName)) {
-                    productsList.remove(product);
-                    break;
-                }
+        int fila = tblProductBox.getSelectedRow();
+        if(fila >= 0) {
+            int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar el producto seleccionado?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+            try{
+                                
+                int id = Integer.parseInt(tblProductBox.getValueAt(fila, 0).toString());
+                
+                file.openFile("product.dat");
+                file.deleteProductById(id);
+                file.closeFile();  
+                
+                loadProductsInTable();
+                cleanFields();
             }
-            ((DefaultTableModel) TxtArea.getModel()).removeRow(selectedRow);
-            JOptionPane.showMessageDialog(this, "Producto eliminado",
-                "Éxito",
-                JOptionPane.INFORMATION_MESSAGE);
+            catch(IOException e)
+            {
+                JOptionPane.showMessageDialog(null,"No se pudo eliminar el producto.");
+            }
+            
         } else {
-            JOptionPane.showMessageDialog(this,
-                "Selecciona un producto para eliminar",
-                "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Por favor seleccione una fila para eliminar", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_BtnEliminarActionPerformed
 
-    private void TxtCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtCategoriaActionPerformed
+    private void txtCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCategoryActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TxtCategoriaActionPerformed
+    }//GEN-LAST:event_txtCategoryActionPerformed
 
-    private void TxtProductNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtProductNameActionPerformed
+    private void txtProductNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProductNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TxtProductNameActionPerformed
+    }//GEN-LAST:event_txtProductNameActionPerformed
 
-    private void BtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBuscarActionPerformed
+    private void btnClearSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearSearchActionPerformed
+        txtProductName.setText("");
+        btnClearSearch.setBackground(null);
+        btnClearSearch.setForeground(null);
+        rowSorter.setRowFilter(null);
 
-        //Trae el texto y lo almcena en una variable
-        String productName = TxtProductName.getText().trim();
-        //Declaración
-        Product foundProduct = null;
-        //Recorre la lista de productos
-        for (Product product : productsList) {
-            //Si el nombre del producto es igual al texto ingresado, será almacenado en foundProduct(producto encontrado)
-            if (product.getName().equalsIgnoreCase(productName)) {
-                foundProduct = product;
-                break;
-            }
-        }
-        //Si el producto encontrado es diferente de nulo
-
-        if (foundProduct != null) {
-            // Agregar una fila al modelo de la tabla con los datos del producto encontrado
-            rowData.add(foundProduct.getName());
-            rowData.add(foundProduct.getCategory());
-            rowData.add(foundProduct.getMark());
-            rowData.add(foundProduct.getPrice());
-            model.addRow(rowData.toArray());
-        } else {
-            JOptionPane.showMessageDialog(this,
-                "Producto no encontrado", "Error",
-                JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_BtnBuscarActionPerformed
+    }//GEN-LAST:event_btnClearSearchActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BtnBuscar;
     private javax.swing.JButton BtnCrear;
     private javax.swing.JButton BtnEditar;
     private javax.swing.JButton BtnEliminar;
-    private javax.swing.JTable TxtArea;
-    private javax.swing.JTextField TxtCategoria;
-    private javax.swing.JTextField TxtMarca;
-    private javax.swing.JTextField TxtNombre;
-    private javax.swing.JTextField TxtPrecio;
-    private javax.swing.JTextField TxtProductName;
+    private javax.swing.JButton btnClearSearch;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -337,5 +456,11 @@ public class ProductPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblProductBox;
+    private javax.swing.JTextField txtBrand;
+    private javax.swing.JTextField txtCategory;
+    private javax.swing.JTextField txtName;
+    private javax.swing.JTextField txtPrice;
+    private javax.swing.JTextField txtProductName;
     // End of variables declaration//GEN-END:variables
 }

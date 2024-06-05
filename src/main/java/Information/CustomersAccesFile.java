@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Controller;
+package Information;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -43,11 +43,7 @@ public class CustomersAccesFile {
         flujo.close();
     }
     
-    public int getCountRegister()
-    {
-        return countRegisters;
-    }
-    
+
     public void addCustomer(Clientes customer) throws IOException
     {
         flujo.seek(countRegisters*tamRegistro);

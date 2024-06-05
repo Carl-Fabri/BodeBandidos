@@ -10,10 +10,6 @@ public class Categories {
     String Nombre;
     String Fech_actual;
     Float Fech_crea;
-
-    public Categories(){
-
-}
     
     public Categories(String ID, String Nombre, String Fech_actual, Float Fech_crea) {
         this.ID = ID;

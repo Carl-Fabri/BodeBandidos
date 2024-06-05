@@ -16,8 +16,6 @@ public class Clientes implements Serializable {
     LocalDate fechadenacimiento, fechaactu, fechacrea;
     int dnioruc;
     int telefono;
-public Clientes (){
-}
 
     public Clientes(String nombre, String apellido, String direccion, String correo, String sexo, int id, LocalDate fechadenacimiento, int dnioruc, int telefono, LocalDate fechaactu, LocalDate fechacrea) {
         this.id = id;
