@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
+ * 
  *
  * @author iTz_Zk1ll3R
  */
@@ -16,7 +17,7 @@ public class Clientes implements Serializable {
     LocalDate fechadenacimiento, fechaactu, fechacrea;
     int dnioruc;
     int telefono;
-
+ 
     public Clientes(String nombre, String apellido, String direccion, String correo, String sexo, int id, LocalDate fechadenacimiento, int dnioruc, int telefono, LocalDate fechaactu, LocalDate fechacrea) {
         this.id = id;
         this.nombre = nombre;
