@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Information;
+package Controller.RandomAccesFile;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -21,6 +21,7 @@ public class ProductAccesFile {
     RandomAccessFile flux;
     int countRecords;
     int sizeRecords = 190; 
+    
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     
     public void openFile(String archive) throws IOException

@@ -4,7 +4,7 @@
  */
 package Views;
 
-import Information.CustomersAccesFile;
+import Controller.RandomAccesFile.CustomersAccesFile;
 import java.awt.Color;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -577,7 +577,7 @@ public class CustomersPanel extends javax.swing.JPanel {
         Validation();
     }//GEN-LAST:event_txtApelliActionPerformed
 
-        private void cargarDatosEnTabla() {
+    private void cargarDatosEnTabla() {
         try {
         archiv.openFile("customers.dat");
         array = archiv.getClientesList();

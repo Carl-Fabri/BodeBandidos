@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package Views;
-import Information.ProductAccesFile;
+import Controller.RandomAccesFile.ProductAccesFile;
 import java.awt.Color;
 import java.io.IOException;
 import java.time.LocalDate;

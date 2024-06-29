@@ -13,8 +13,8 @@ import java.time.LocalDate;
  */
 public class Clientes implements Serializable {
     String nombre, apellido, direccion, correo, sexo;
-    int id;
     LocalDate fechadenacimiento, fechaactu, fechacrea;
+    int id;
     int dnioruc;
     int telefono;
  
