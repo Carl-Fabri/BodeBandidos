@@ -1,8 +1,10 @@
+package Views;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package Views;
+
 
 import Controller.RandomAccesFile.CustomersAccesFile;
 import java.awt.Color;
@@ -164,7 +166,7 @@ public class CustomersPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
         jLabel5.setText("Lista de clientes");
 
         txtDireccion.addActionListener(new java.awt.event.ActionListener() {
@@ -173,7 +175,7 @@ public class CustomersPanel extends javax.swing.JPanel {
             }
         });
 
-        jButton4.setBackground(java.awt.SystemColor.control);
+        jButton4.setBackground(new java.awt.Color(255, 0, 0));
         jButton4.setText("Crear un Cliente");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -193,6 +195,7 @@ public class CustomersPanel extends javax.swing.JPanel {
             }
         });
 
+        btnCleanSearch.setBackground(new java.awt.Color(255, 0, 0));
         btnCleanSearch.setText("Remover filtros");
         btnCleanSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -200,6 +203,7 @@ public class CustomersPanel extends javax.swing.JPanel {
             }
         });
 
+        Eliminar.setBackground(new java.awt.Color(255, 0, 0));
         Eliminar.setText("Eliminar un cliente");
         Eliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -207,6 +211,7 @@ public class CustomersPanel extends javax.swing.JPanel {
             }
         });
 
+        Editar.setBackground(new java.awt.Color(255, 0, 0));
         Editar.setText("Editar un cliente");
         Editar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -577,7 +582,7 @@ public class CustomersPanel extends javax.swing.JPanel {
         Validation();
     }//GEN-LAST:event_txtApelliActionPerformed
 
-    private void cargarDatosEnTabla() {
+        private void cargarDatosEnTabla() {
         try {
         archiv.openFile("customers.dat");
         array = archiv.getClientesList();

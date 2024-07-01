@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package Views;
+package Views.procesos;
 import java.io.IOException;
 import javax.swing.JFrame;
 import java.util.logging.Level;
@@ -66,6 +66,7 @@ public class OrderPanel extends javax.swing.JPanel {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel5.setText("Ordenes");
 
+        jButton1.setBackground(new java.awt.Color(255, 0, 0));
         jButton1.setText("Filtros");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -80,7 +81,7 @@ public class OrderPanel extends javax.swing.JPanel {
             }
         });
 
-        jButton4.setBackground(java.awt.SystemColor.control);
+        jButton4.setBackground(new java.awt.Color(255, 0, 0));
         jButton4.setText("Buscar");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -4,8 +4,13 @@
  */
 package Views;
 
+import Views.mantenimientos.CategoriesPanel;
+import Views.mantenimientos.MantenimientosPreview;
+import Views.mantenimientos.ProductPanel;
+import Views.procesos.OrderPanel;
 import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import javax.print.attribute.standard.PresentationDirection;
 import javax.swing.JPanel;
 
@@ -13,20 +18,39 @@ import javax.swing.JPanel;
  *
  * @author Carlos Fabricio
  */
-public class DashboardProducts extends javax.swing.JFrame {
+public class DashboardProducts extends javax.swing.JFrame implements DashboardInterface {
 
+    static CardLayout cardLayout;
     /**
      * Creates new form DashboardProductos
      */
     public DashboardProducts() {
         initComponents();
-        initContet();
+        //initContet();
+        
+       // panContent = new JPanel(new CardLayout());
+        cardLayout = (CardLayout)panContent.getLayout();
+        // Crear y agregar los paneles
+        JPanel panel1 = new MantenimientosPreview(this);
+        JPanel panel2 = new ProductPanel(this);
+
+        panContent.add(panel1, "Panel1");
+        panContent.add(panel2, "Panel2");
+        
+        cardLayout.show(panContent,"Panel1");
     }
     
     
+    @Override
+    public void switchPanel(String panelName) {
+        cardLayout.show(panContent, panelName);
+    }
+
+    
     private void initContet() {
-        Principal plPrincipal = new Principal();
-        ShowJPanel(plPrincipal);
+        
+        //Principal plPrincipal = new Principal();
+        //ShowJPanel(plPrincipal);
     }
 
     /**
@@ -138,9 +162,10 @@ public class DashboardProducts extends javax.swing.JFrame {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(btnProductsPan, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(btnCustomersPan, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(panMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                .addComponent(btnOrdersPan, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(btnCategoriesPan, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(btnCategoriesPan, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(panMenuLayout.createSequentialGroup()
+                .addGap(1, 1, 1)
+                .addComponent(btnOrdersPan, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         panMenuLayout.setVerticalGroup(
             panMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -155,24 +180,13 @@ public class DashboardProducts extends javax.swing.JFrame {
                 .addComponent(btnCustomersPan, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(7, 7, 7)
                 .addComponent(btnCategoriesPan, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnOrdersPan, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(6, 6, 6)
+                .addComponent(btnOrdersPan, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        panContent.setBackground(new java.awt.Color(255, 255, 255));
+        panContent.setBackground(new java.awt.Color(255, 0, 51));
         panContent.setRequestFocusEnabled(false);
-
-        javax.swing.GroupLayout panContentLayout = new javax.swing.GroupLayout(panContent);
-        panContent.setLayout(panContentLayout);
-        panContentLayout.setHorizontalGroup(
-            panContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 700, Short.MAX_VALUE)
-        );
-        panContentLayout.setVerticalGroup(
-            panContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
+        panContent.setLayout(new java.awt.CardLayout());
 
         javax.swing.GroupLayout panBackgroundLayout = new javax.swing.GroupLayout(panBackground);
         panBackground.setLayout(panBackgroundLayout);
@@ -180,14 +194,15 @@ public class DashboardProducts extends javax.swing.JFrame {
             panBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panBackgroundLayout.createSequentialGroup()
                 .addComponent(panMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(1, 1, 1)
-                .addComponent(panContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panContent, javax.swing.GroupLayout.DEFAULT_SIZE, 575, Short.MAX_VALUE)
+                .addContainerGap())
         );
         panBackgroundLayout.setVerticalGroup(
             panBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(panBackgroundLayout.createSequentialGroup()
-                .addComponent(panContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panContent, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -206,23 +221,22 @@ public class DashboardProducts extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCustomersPanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCustomersPanActionPerformed
-        CustomersPanel pl = new CustomersPanel();
-        ShowJPanel(pl);
+        switchPanel("Panel1");
     }//GEN-LAST:event_btnCustomersPanActionPerformed
 
     private void btnOrdersPanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdersPanActionPerformed
-        OrderPanel pl = new OrderPanel();
-        ShowJPanel(pl);
+        switchPanel("Panel2");
     }//GEN-LAST:event_btnOrdersPanActionPerformed
 
     private void btnProductsPanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductsPanActionPerformed
-        ProductPanel pl = new ProductPanel();
-        ShowJPanel(pl);
+        switchPanel("Panel2");
+        //.switchPanel("Panel2");
+//ProductPanel pl = new ProductPanel();
+        //ShowJPanel(pl);
     }//GEN-LAST:event_btnProductsPanActionPerformed
 
     private void btnCategoriesPanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriesPanActionPerformed
-        CategoriesPanel pl = new CategoriesPanel();
-        ShowJPanel(pl);
+
     }//GEN-LAST:event_btnCategoriesPanActionPerformed
 
     private void lblTitleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTitleMouseClicked
