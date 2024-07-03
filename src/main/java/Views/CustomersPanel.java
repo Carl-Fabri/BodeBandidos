@@ -393,92 +393,19 @@ public class CustomersPanel extends javax.swing.JPanel {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-    
-    private void txtNomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomActionPerformed
-         Validation();
-    }//GEN-LAST:event_txtNomActionPerformed
-
-    private void txfSearchValuePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_txfSearchValuePropertyChange
-
-    }//GEN-LAST:event_txfSearchValuePropertyChange
-
-    private void txfSearchValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfSearchValueActionPerformed
-
-    }//GEN-LAST:event_txfSearchValueActionPerformed
-
-    private void txtSexoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSexoActionPerformed
-        Validation();
-    }//GEN-LAST:event_txtSexoActionPerformed
-
-    private void EditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditarActionPerformed
-        int fila = tbl.getSelectedRow();
-        
-        if (fila >= 0) {
-            
-            String nombre = txtNom.getText();
-            String apellido = txtApelli.getText();
-            String fechaNacimiento = txtFechaNac.getText();
-            String direccion = txtDireccion.getText();
-            String dniORuc = txtDnioRuc.getText();
-            String telefono = txtTelef.getText();
-            String correo = txtCorreo.getText();
-            String sexo = txtSexo.getText();
-
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-
-            try {
-                int idInt = Integer.parseInt(tbl.getValueAt(fila, 0).toString());
-                int telefonoInt = Integer.parseInt(telefono);
-                int dniORucInt = Integer.parseInt(dniORuc);
-
-                LocalDate fechaNacimientoLocalDate = LocalDate.parse(fechaNacimiento, formatter);
-                LocalDate fechaActualizacionLocalDate = LocalDate.now();
-
-                Clientes cliente = array.get(fila);
-                cliente.setId(idInt);
-                cliente.setNombre(nombre);
-                cliente.setApellido(apellido);
-                cliente.setFechadenacimiento(fechaNacimientoLocalDate);
-                cliente.setDireccion(direccion);
-                cliente.setDnioruc(dniORucInt);
-                cliente.setTelefono(telefonoInt);
-                cliente.setCorreo(correo);
-                cliente.setSexo(sexo);
-                cliente.setFechaactu(fechaActualizacionLocalDate);
-                
-                archiv.openFile("customers.dat");
-                archiv.actualizarClientePorId(idInt,cliente);
-                archiv.closeFile();  
-
-                cargarDatosEnTabla();
-                limpiarCampos();
-
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this, "Error: Uno o más campos no son números enteros válidos.", "Error de conversión", JOptionPane.ERROR_MESSAGE);
-            } catch (DateTimeParseException e) {
-                JOptionPane.showMessageDialog(this, "Error: El formato de fecha no es válido.", "Error de formato de fecha", JOptionPane.ERROR_MESSAGE);
-            }
-            catch(IOException e)
-            {
-                JOptionPane.showMessageDialog(null,"No se pudo actualizar");
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "No se ha seleccionado ninguna fila para editar.", "Error de selección", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_EditarActionPerformed
 
     private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
         int fila = tbl.getSelectedRow();
         if(fila >= 0) {
             int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar la fila seleccionada?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
             try{
-                                
+
                 int id = Integer.parseInt(tbl.getValueAt(fila, 0).toString());
-                
+
                 archiv.openFile("customers.dat");
                 archiv.eliminarClientePorId(id);
-                archiv.closeFile();  
-                
+                archiv.closeFile();
+
                 cargarDatosEnTabla();
                 limpiarCampos();
             }
@@ -486,7 +413,7 @@ public class CustomersPanel extends javax.swing.JPanel {
             {
                 JOptionPane.showMessageDialog(null,"No se pudo actualizar");
             }
-            
+
         } else {
             JOptionPane.showMessageDialog(null, "Por favor seleccione una fila para eliminar", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -507,7 +434,7 @@ public class CustomersPanel extends javax.swing.JPanel {
     private void txtTelefActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefActionPerformed
         Validation();
     }//GEN-LAST:event_txtTelefActionPerformed
-    
+
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
 
         String nombre = txtNom.getText();
@@ -518,9 +445,9 @@ public class CustomersPanel extends javax.swing.JPanel {
         String telefono = txtTelef.getText();
         String correo = txtCorreo.getText();
         String sexo = txtSexo.getText();
-        
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        
+
         try
         {
             archiv.openFile("customers.dat");
@@ -552,18 +479,18 @@ public class CustomersPanel extends javax.swing.JPanel {
         {
             JOptionPane.showMessageDialog(null,"No se pudo grabar en el archivo");
         }
-    }
-    
-    private void limpiarCampos() {
-        txtNom.setText("");
-        txtApelli.setText("");
-        txtFechaNac.setText("");
-        txtDnioRuc.setText("");
-        txtCorreo.setText("");
-        txtDireccion.setText("");
-        txtTelef.setText("");
-        txtSexo.setText("");
-        tbl.clearSelection();  
+        }
+
+        private void limpiarCampos() {
+            txtNom.setText("");
+            txtApelli.setText("");
+            txtFechaNac.setText("");
+            txtDnioRuc.setText("");
+            txtCorreo.setText("");
+            txtDireccion.setText("");
+            txtTelef.setText("");
+            txtSexo.setText("");
+            tbl.clearSelection();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void txtDireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDireccionActionPerformed
@@ -578,10 +505,83 @@ public class CustomersPanel extends javax.swing.JPanel {
         Validation();
     }//GEN-LAST:event_txtFechaNacActionPerformed
 
+    private void txfSearchValuePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_txfSearchValuePropertyChange
+
+    }//GEN-LAST:event_txfSearchValuePropertyChange
+
+    private void txfSearchValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfSearchValueActionPerformed
+
+    }//GEN-LAST:event_txfSearchValueActionPerformed
+
+    private void txtNomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomActionPerformed
+        Validation();
+    }//GEN-LAST:event_txtNomActionPerformed
+
+    private void txtSexoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSexoActionPerformed
+        Validation();
+    }//GEN-LAST:event_txtSexoActionPerformed
+
     private void txtApelliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApelliActionPerformed
         Validation();
     }//GEN-LAST:event_txtApelliActionPerformed
 
+    private void EditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditarActionPerformed
+        int fila = tbl.getSelectedRow();
+
+        if (fila >= 0) {
+
+            String nombre = txtNom.getText();
+            String apellido = txtApelli.getText();
+            String fechaNacimiento = txtFechaNac.getText();
+            String direccion = txtDireccion.getText();
+            String dniORuc = txtDnioRuc.getText();
+            String telefono = txtTelef.getText();
+            String correo = txtCorreo.getText();
+            String sexo = txtSexo.getText();
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+            try {
+                int idInt = Integer.parseInt(tbl.getValueAt(fila, 0).toString());
+                int telefonoInt = Integer.parseInt(telefono);
+                int dniORucInt = Integer.parseInt(dniORuc);
+
+                LocalDate fechaNacimientoLocalDate = LocalDate.parse(fechaNacimiento, formatter);
+                LocalDate fechaActualizacionLocalDate = LocalDate.now();
+
+                Clientes cliente = array.get(fila);
+                cliente.setId(idInt);
+                cliente.setNombre(nombre);
+                cliente.setApellido(apellido);
+                cliente.setFechadenacimiento(fechaNacimientoLocalDate);
+                cliente.setDireccion(direccion);
+                cliente.setDnioruc(dniORucInt);
+                cliente.setTelefono(telefonoInt);
+                cliente.setCorreo(correo);
+                cliente.setSexo(sexo);
+                cliente.setFechaactu(fechaActualizacionLocalDate);
+
+                archiv.openFile("customers.dat");
+                archiv.actualizarClientePorId(idInt,cliente);
+                archiv.closeFile();
+
+                cargarDatosEnTabla();
+                limpiarCampos();
+
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Error: Uno o más campos no son números enteros válidos.", "Error de conversión", JOptionPane.ERROR_MESSAGE);
+            } catch (DateTimeParseException e) {
+                JOptionPane.showMessageDialog(this, "Error: El formato de fecha no es válido.", "Error de formato de fecha", JOptionPane.ERROR_MESSAGE);
+            }
+            catch(IOException e)
+            {
+                JOptionPane.showMessageDialog(null,"No se pudo actualizar");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No se ha seleccionado ninguna fila para editar.", "Error de selección", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_EditarActionPerformed
+        
         private void cargarDatosEnTabla() {
         try {
         archiv.openFile("customers.dat");

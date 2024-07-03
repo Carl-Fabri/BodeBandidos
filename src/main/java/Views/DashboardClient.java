@@ -25,14 +25,14 @@ import model.UserSession;
  *
  * @author Carlos Fabricio
  */
-public class Dashboard extends javax.swing.JFrame implements DashboardInterface{
+public class DashboardClient extends javax.swing.JFrame implements DashboardInterface{
 
     private CardLayout cardLayout;
     
     /**
      * Creates new form DashboardProductos
      */
-    public Dashboard() {
+    public DashboardClient() {
         
         cardLayout = new CardLayout();
         initComponents();
@@ -85,9 +85,7 @@ public class Dashboard extends javax.swing.JFrame implements DashboardInterface{
 
         panBackground = new javax.swing.JPanel();
         panMenu = new javax.swing.JPanel();
-        btnUsuarios = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
-        btnMantenimientos = new javax.swing.JButton();
         btnOrdersPan = new javax.swing.JButton();
         btnProcesos = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -105,41 +103,7 @@ public class Dashboard extends javax.swing.JFrame implements DashboardInterface{
 
         panMenu.setBackground(new java.awt.Color(255, 0, 0));
         panMenu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        btnUsuarios.setBackground(new java.awt.Color(255, 0, 0));
-        btnUsuarios.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnUsuarios.setForeground(new java.awt.Color(255, 255, 255));
-        btnUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/user-ico.png"))); // NOI18N
-        btnUsuarios.setText("Usuarios");
-        btnUsuarios.setBorder(javax.swing.BorderFactory.createMatteBorder(20, 10, 20, 20, new java.awt.Color(0, 0, 0)));
-        btnUsuarios.setBorderPainted(false);
-        btnUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnUsuarios.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btnUsuarios.setIconTextGap(10);
-        btnUsuarios.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUsuariosActionPerformed(evt);
-            }
-        });
-        panMenu.add(btnUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 271, 51));
         panMenu.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 106, 237, -1));
-
-        btnMantenimientos.setBackground(new java.awt.Color(255, 0, 0));
-        btnMantenimientos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnMantenimientos.setForeground(new java.awt.Color(255, 255, 255));
-        btnMantenimientos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8-product-30.png"))); // NOI18N
-        btnMantenimientos.setText("Mantenimientos");
-        btnMantenimientos.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 10, 1, 1, new java.awt.Color(0, 0, 0)));
-        btnMantenimientos.setBorderPainted(false);
-        btnMantenimientos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnMantenimientos.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btnMantenimientos.setIconTextGap(10);
-        btnMantenimientos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMantenimientosActionPerformed(evt);
-            }
-        });
-        panMenu.add(btnMantenimientos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 271, 51));
 
         btnOrdersPan.setBackground(new java.awt.Color(255, 0, 0));
         btnOrdersPan.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -158,7 +122,7 @@ public class Dashboard extends javax.swing.JFrame implements DashboardInterface{
                 btnOrdersPanActionPerformed(evt);
             }
         });
-        panMenu.add(btnOrdersPan, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 271, 50));
+        panMenu.add(btnOrdersPan, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 271, 50));
 
         btnProcesos.setBackground(new java.awt.Color(255, 0, 0));
         btnProcesos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -175,7 +139,7 @@ public class Dashboard extends javax.swing.JFrame implements DashboardInterface{
                 btnProcesosActionPerformed(evt);
             }
         });
-        panMenu.add(btnProcesos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 300, 271, 51));
+        panMenu.add(btnProcesos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, 271, 51));
 
         jLabel1.setFont(new java.awt.Font("Ink Free", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -263,17 +227,9 @@ public class Dashboard extends javax.swing.JFrame implements DashboardInterface{
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed
-        switchPanel("Usuarios");
-    }//GEN-LAST:event_btnUsuariosActionPerformed
-
     private void btnOrdersPanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdersPanActionPerformed
         switchPanel("Ordenes");
     }//GEN-LAST:event_btnOrdersPanActionPerformed
-
-    private void btnMantenimientosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMantenimientosActionPerformed
-        switchPanel("Mantenimientos");
-    }//GEN-LAST:event_btnMantenimientosActionPerformed
 
     private void btnProcesosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcesosActionPerformed
         //switchPanel("Mantenimientos");
@@ -317,13 +273,13 @@ public class Dashboard extends javax.swing.JFrame implements DashboardInterface{
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DashboardClient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DashboardClient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DashboardClient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DashboardClient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         FlatLightLaf.setup();
@@ -331,17 +287,15 @@ public class Dashboard extends javax.swing.JFrame implements DashboardInterface{
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Dashboard().setVisible(true);
+                new DashboardClient().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnMantenimientos;
     private javax.swing.JButton btnOrdersPan;
     private javax.swing.JButton btnPrincipalPan;
     private javax.swing.JButton btnProcesos;
-    private javax.swing.JButton btnUsuarios;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
